@@ -34,18 +34,31 @@ class ConsoleGitLibrary:
                 key.replace("commit ","")[:int(commit_key_length)]
             ))
 
-
         if output == True:
             for date, msg, key in commit_info_fixed:
-                print date+" : "+msg+" : "+key
+                print date+" - "+msg+" - "+key
 
         elif output == False:
             return commit_info_fixed
             
 
-    def commitkey(self):
+    def commitkey(self, output=True):
         commitkies = self.commitkies(40, False)
-        print commitkies[0][2]
+        if output == True:
+            print commitkies[0][2]
+        elif output == False:
+            return commitkies[0][2]
+
+    def list(self):
+        tree_info = self.get_tree_info(self.commitkey(False))
+        for permission, tyoeof, key, filename in tree_info:
+            if typeof == "tree":
+                more_tree_info = self.get_tree_info(key)
+
+    def get_tree_info(self, commitkey):
+        self.command = "git ls-tree %s" % commitkey
+        tree_info = [tuple(i.split(" ")) for i in self.execute(self.command).replace("\t"," ").split("\n")]
+        return tree_info
 
     def execute(self, command_string):
         return commands.getoutput(command_string)
