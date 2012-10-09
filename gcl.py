@@ -51,7 +51,7 @@ class ConsoleGitLibrary:
 
     def list(self):
         tree_info = self.get_tree_info(self.commitkey(False))
-        for permission, tyoeof, key, filename in tree_info:
+        for permission, typeof, key, filename in tree_info:
             if typeof == "tree":
                 more_tree_info = self.get_tree_info(key)
 
@@ -67,6 +67,5 @@ class ConsoleGitLibrary:
 
 if __name__ == "__main__":
     cgl = ConsoleGitLibrary()
-    cgl.commitkies(10)
-    cgl.commitkey()
+    cgl.commitkies(100)
 
