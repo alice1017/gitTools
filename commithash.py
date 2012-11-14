@@ -3,8 +3,8 @@
 
 import commands
 import miniparser
-import utils.core as core
-from utils.color import *
+import util.core as core
+from util.color import *
 
 parser = miniparser.parser()
 
