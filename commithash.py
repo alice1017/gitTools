@@ -16,13 +16,23 @@ def latest():
 @parser.option("ls", description="You can show all commit hash with date, comment")
 def show_all():
     commits = core.get_commits()
-    for commit_obj in commits:
-        print "%(date)s : %(hash)s - '%(comment)s'" % {
+    for index, commit_obj in enumerate(commits):
+        print "[%(index)s] %(date)s : %(hash)s - '%(comment)s'" % {
+            "index": yellow("0%d"%index) if index < 10 else yellow(index),
             "date" : commit_obj.date.strftime("%y/%m/%d %H:%M:%S"),
             "hash" : magenta(commit_obj.commithash),
             "comment": commit_obj.comment,
         }
 
+@parser.option("get", description="You can copy commit hash to clibbord. Please set index.", argument_types={"index":int})
+def copy_hash(index):
+    commits = core.get_commits()
+    if index > len(commits):
+        print "this index is over length limit."
+        return
+
+    core.shellrun("echo '%s' | pbcopy" % commits[index].commithash)
+    print "Copied : "+commits[index].commithash
 
 
 if __name__ == "__main__":
