@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #coding: utf-8
 
+import os
 import commands
 import dateutil.parser as dateparser
 
@@ -22,6 +23,7 @@ class Commit(object):
         self.author = self._get_user_obj(author)
         self.date = date
         self.comment = comment
+        self.merge_data = merge_data
 
     def _get_user_obj(self, author_string):
         if " " in author_string:
@@ -62,7 +64,7 @@ def get_commits():
 
             
 def parse_commit(commitstring):
-    commitdata = commitstring.split("\n")
+    commitdata = [i for i in commitstring.split("\n") if i != "    "]
     parse_result = {}
     
     if len(commitdata) == 5:
@@ -109,10 +111,38 @@ def parse_commit(commitstring):
                 "author"    : author,
                 "date"      : date,
                 "comment"   : comment}
+    else:
+        # abnomal
+        # -- sample -----------------------------------------
+        # 0 commit 311dda81133c69e9394a1c11c5eab7b1baf0477c
+        # 1 Merge: 5740af5 3691dad
+        # 2 Author: alice <genocidedragon@gmail.com>
+        # 3 Date:   Mon Nov 5 16:58:31 2012 -0800
+        # 4    Merge pull request #5 from yosida95/bugfix
+        # 5    pull request merge.
+        # ---------------------------------------------------
+        commithash   = commitdata[0].split(" ")[1]
+        merge_source = commitdata[1].split(" ")[1]
+        merge_dest   = commitdata[1].split(" ")[2]
+        author       = commitdata[2].split(" ")[1]
+        date         = dateparser.parse(
+                        commitdata[3].replace(
+                                "Date:   ",""))
+        comment      = ", ".join([i.strip() for i in commitdata[4:]])
+
+        return {"commithash": commithash,
+                "merge_data": (merge_source, merge_dest),
+                "author"    : author,
+                "date"      : date,
+                "comment"   : comment}
 
 def shellrun(command):
     return commands.getoutput(command)
         
 
-
+def check_exist_repo():
+    if ".git" in os.listdir("."):
+        return True
+    else:
+        return False
 

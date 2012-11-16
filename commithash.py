@@ -22,7 +22,7 @@ def show_all():
         print "[%(index)s] %(date)s : %(hash)s - '%(comment)s'" % {
             "index": yellow("0%d"%index) if index < 10 else yellow(index),
             "date" : commit_obj.date.strftime("%y/%m/%d %H:%M:%S"),
-            "hash" : magenta(commit_obj.commithash),
+            "hash" : green(commit_obj.commithash),
             "comment": commit_obj.comment,
         }
 
