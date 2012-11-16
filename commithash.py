@@ -27,7 +27,7 @@ def show_all():
 @parser.option("get", description="You can get commit hash. Please set index.", argument_types={"index":int})
 def copy_hash(index):
     commits = core.get_commits()
-    if index > len(commits):
+    if index > len(commits)-1:
         print "this index is over length limit."
         return
 
