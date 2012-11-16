@@ -13,7 +13,9 @@ def latest():
     commits = core.get_commits()
     print commits[-1].commithash
 
-@parser.option("ls", description="You can show all commit hash with date, comment")
+@parser.option(
+    "ls", 
+    description="You can show all commit hash with date, comment")
 def show_all():
     commits = core.get_commits()
     for index, commit_obj in enumerate(commits):
@@ -24,16 +26,22 @@ def show_all():
             "comment": commit_obj.comment,
         }
 
-@parser.option("get", description="You can get commit hash. Please set index.", argument_types={"index":int})
+@parser.option(
+    "get", 
+    description="You can get commit hash. Please set index.", 
+    argument_types={"index":int})
 def copy_hash(index):
     commits = core.get_commits()
     if index > len(commits)-1:
-        print "this index is over length limit."
+        print yellow("this index is over length limit.")
         return
 
     print commits[index].commithash
 
 
 if __name__ == "__main__":
+    if core.check_exist_repo() == False:
+        print yellow("There is not git repository!")
+        miniparser.kill(1)
 
     parser.parse()
