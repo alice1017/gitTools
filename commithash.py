@@ -24,15 +24,14 @@ def show_all():
             "comment": commit_obj.comment,
         }
 
-@parser.option("get", description="You can copy commit hash to clibbord. Please set index.", argument_types={"index":int})
+@parser.option("get", description="You can get commit hash. Please set index.", argument_types={"index":int})
 def copy_hash(index):
     commits = core.get_commits()
     if index > len(commits):
         print "this index is over length limit."
         return
 
-    core.shellrun("echo '%s' | pbcopy" % commits[index].commithash)
-    print "Copied : "+commits[index].commithash
+    print commits[index].commithash
 
 
 if __name__ == "__main__":
