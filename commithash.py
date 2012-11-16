@@ -11,7 +11,7 @@ parser = miniparser.parser()
 @parser.command(description="You can show latest commit hash.")
 def latest():
     commits = core.get_commits()
-    print commits[-1].commithash
+    print commits[0].commithash
 
 @parser.option(
     "ls", 
