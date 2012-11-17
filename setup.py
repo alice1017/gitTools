@@ -13,7 +13,7 @@ class Information(object):
     author_blog="http://intention.hateblo.jp"
     license="MIT"
     description="The command line tools about github."
-    #long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst'),"r").read().replace(".. sourcecode:: python","::")
+    long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst'),"r").read().replace(".. sourcecode:: shellscript","::")
 
 info = Information()
 
@@ -27,9 +27,9 @@ setup(
     version=info.version,
     license=info.license,
     url=info.author_github,
-    #download_url=info.author_github+"/miniparser",
+    download_url=info.author_github+"/gitTools",
     description=info.description,
-    #long_description=info.long_description,
+    long_description=info.long_description,
     py_modules=['util.core', 'util.color'],
     scripts=['bin/commithash']
 )
