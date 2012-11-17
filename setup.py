@@ -36,5 +36,5 @@ setup(
     long_description = info.long_description,
     py_modules = ['commithash', 'util.core', 'util.color'],
     scripts = ['bin/commithash'],
-    required = ['termcolor', 'miniparser']
+    install_requires = ['termcolor', 'miniparser']
 )
