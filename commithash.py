@@ -1,12 +1,27 @@
 #!/usr/bin/env python
 #coding: utf-8
 
+import os
 import commands
 import miniparser
 import util.core as core
 from util.color import *
 
-parser = miniparser.parser()
+
+class Information(object):
+    version = "1.0.0"
+    author = "alice1017"
+    author_github = "http://github.com/alice1017"
+    author_twitter = "http://twitter.com/alice1017"
+    author_email = "takemehighermore@gmail.com"
+    author_blog = "http://intention.hateblo.jp"
+    license = "MIT"
+    description = "This tools make you more usefull git"
+    long_description = open(os.path.join(os.path.dirname(__file__), 'README.rst'),"r").read().replace(".. sourcecode:: shellscript","::")
+
+info = Information()
+
+parser = miniparser.parser(version=info.version, description=info.description)
 
 @parser.command(description="You can show latest commit hash.")
 def latest():

@@ -3,17 +3,7 @@
 
 import os
 from distutils.core import setup
-
-class Information(object):
-    version = "1.0.0"
-    author = "alice1017"
-    author_github = "http://github.com/alice1017"
-    author_twitter = "http://twitter.com/alice1017"
-    author_email = "takemehighermore@gmail.com"
-    author_blog = "http://intention.hateblo.jp"
-    license = "MIT"
-    description = "The command line tools about github."
-    long_description = open(os.path.join(os.path.dirname(__file__), 'README.rst'),"r").read().replace(".. sourcecode:: shellscript","::")
+from commithash import Information
 
 info  =  Information()
 
@@ -33,7 +23,7 @@ setup(
     download_url = info.author_github+"/gitTools",
     description = info.description,
     long_description = info.long_description,
-    py_modules = ['util.core', 'util.color'],
-    scripts = ['bin/commithash'],
+    py_modules = ['commithash', 'util.core', 'util.color'],
+    #scripts = ['bin/commithash'],
     required = ['termcolor', 'miniparser']
 )
