@@ -18,6 +18,9 @@ class Information(object):
 info  =  Information()
 
 # build tools
+if os.path.isdir("bin") == False:
+    os.system("mkdir bin/")
+
 os.system("cp ./commithash.py bin/commithash;chmod +x ./bin/commithash")
 
 setup(
