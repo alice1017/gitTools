@@ -3,7 +3,18 @@
 
 import os
 from distutils.core import setup
-from commithash import Information
+
+
+class Information(object):
+    version = "1.0.0"
+    author = "alice1017"
+    author_github = "http://github.com/alice1017"
+    author_twitter = "http://twitter.com/alice1017"
+    author_email = "takemehighermore@gmail.com"
+    author_blog = "http://intention.hateblo.jp"
+    license = "MIT"
+    description = "This tools make you more usefull git"
+    long_description = open(os.path.join(os.path.dirname(__file__), 'README.rst'),"r").read().replace(".. sourcecode:: shellscript","::")
 
 info  =  Information()
 
@@ -24,6 +35,6 @@ setup(
     description = info.description,
     long_description = info.long_description,
     py_modules = ['commithash', 'util.core', 'util.color'],
-    #scripts = ['bin/commithash'],
+    scripts = ['bin/commithash'],
     required = ['termcolor', 'miniparser']
 )
