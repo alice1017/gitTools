@@ -1,20 +1,35 @@
 #!/usr/bin/env python
 #coding: utf-8
 
+import os
 from distutils.core import setup
 
+class Information(object):
+    version="1.0.0"
+    author="alice1017"
+    author_github="http://github.com/alice1017"
+    author_twitter="http://twitter.com/alice1017"
+    author_email="takemehighermore@gmail.com"
+    author_blog="http://intention.hateblo.jp"
+    license="MIT"
+    description="The command line tools about github."
+    #long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst'),"r").read().replace(".. sourcecode:: python","::")
+
+info = Information()
+
+# build tools
+os.system("cp ./commandhash.py bin/commandhash;chmod +x ./bin/commandhash")
 
 setup(
-	name = ,
-	author = ,
-	author_email = "",
-	version = ,
-	license = "",
-	url = "",
-	download_url = "",
-	description = "",
-	py_modules = ['', ''],
-	packages = [''],
-	scripts = ['']
+    name="gitTools",
+    author=info.author,
+    author_email=info.author_email,
+    version=info.version,
+    license=info.license,
+    url=info.author_github,
+    #download_url=info.author_github+"/miniparser",
+    description=info.description,
+    #long_description=info.long_description,
+    py_modules=['util.core', 'util.color'],
+    scripts=['bin/commithash']
 )
-
