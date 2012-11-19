@@ -146,3 +146,22 @@ def check_exist_repo():
     else:
         return False
 
+def terminal_width():
+    """Return terminal width."""
+    width = 0
+    try:
+        import struct
+        import fcntl
+        import termios
+        s = struct.pack('HHHH', 0, 0, 0, 0)
+        x = fcntl.ioctl(1, termios.TIOCGWINSZ, s)
+        width = struct.unpack('HHHH', x)[1]
+    except:
+        pass
+    if width <= 0:
+        if "COLUMNS" in os.environ:
+            width = int(os.getenv("COLUMNS"))
+        if width <= 0:
+            width = 80
+    return width
+

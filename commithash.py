@@ -19,11 +19,15 @@ def latest():
     description="You can show all commit hash with date, comment")
 def show_all():
     commits = core.get_commits()
+    width = core.terminal_width()
+    header = "No  "+"Date".ljust(17)+"   "+"Hash".ljust(10)+"   Comment" 
+    print header
+    print "-"*width
     for index, commit_obj in enumerate(commits):
-        print "[%(index)s] %(date)s : %(hash)s - '%(comment)s'" % {
+        print "%(index)s  %(date)s   %(hash)s   %(comment)s" % {
             "index": yellow("0%d"%index) if index < 10 else yellow(index),
             "date" : commit_obj.date.strftime("%y/%m/%d %H:%M:%S"),
-            "hash" : green(commit_obj.commithash),
+            "hash" : commit_obj.commithash[:10],
             "comment": commit_obj.comment,
         }
 
