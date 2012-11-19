@@ -24,7 +24,7 @@ commandhash
 
 　**ls** オプションを指定すると、 現在のgitリポジトリのコミットの一覧を見ることができます。
 
-.. image:: https://www.evernote.com/shard/s14/sh/d6c51c36-33f6-4989-a291-823f4258cc3b/331c709c39691598a1e75107ce0e700e/res/0ce740e6-c347-4a32-bc17-cb01fea94bf6/skitch.png
+.. image:: http://d3j5vwomefv46c.cloudfront.net/photos/full/689489871.png?key=1185653&Expires=1353307392&Key-Pair-Id=APKAIYVGSUJFNRFZBBTA&Signature=PSAXiySE1WSgoiqOOoOCPiiSFZh4OEfJcOzzQFE8FBqy6oWeG7Wi~cfaFi-nM5J~xXz2e9u9udvWRB91wekJ-5QDNc0e2WOuvUHKhUvvRxV8g9tNg2srbb4HCbhQgK1JS4yeblRMXtH6HxAl8cN5HV4Of0WA-kxxOYlAOuiOLUA_
 
 .. sourcecode:: shellscript
 
