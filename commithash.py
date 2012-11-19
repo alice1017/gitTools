@@ -39,6 +39,26 @@ def copy_hash(index):
 
     print commits[index].commithash
 
+@parser.option(
+    "show",
+    description="You can show commit difarence",
+    argument_types={"index":int})
+def show_diff(index):
+    commits = core.get_commits()
+    if index > len(commits)-1:
+        print yellow("this index is over length limit.")
+        return
+
+    lines = core.shellrun("git show %s" % commits[index]).split("\n")
+    for line in lines:
+        if line.startswith("+"):
+            print red(line)
+        elif line.startswith("-"):
+            print green(line)
+        elif line.startswith("diff") or line.startswith("index"):
+            print yellow(line)
+        else:
+            print line
 
 if __name__ == "__main__":
     if core.check_exist_repo() == False:
