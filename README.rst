@@ -54,6 +54,11 @@ Copyright Alice1017 All rights reserved.
 
 License : MIT License
 
+ChangeLog
+##########
+
+:ver 1.0.1: *ls* オプションでの出力形式を変更。hash値の緑をなくし、hash値も10文字に制限して、シンプルにみやすさを追求しました。
+
 Author Info
 ############
 
