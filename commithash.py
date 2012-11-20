@@ -7,7 +7,7 @@ import miniparser
 import util.core as core
 from util.color import *
 
-parser = miniparser.parser(version="1.0.0", description="This tools make you more usefull git")
+parser = miniparser.parser(version="1.0.1", description="This tools make you more usefull git")
 
 @parser.command(description="You can show latest commit hash.")
 def latest():

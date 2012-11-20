@@ -6,7 +6,7 @@ from distutils.core import setup
 
 
 class Information(object):
-    version = "1.0.0"
+    version = "1.0.1"
     author = "alice1017"
     author_github = "http://github.com/alice1017"
     author_twitter = "http://twitter.com/alice1017"
