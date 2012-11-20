@@ -7,6 +7,7 @@ from objects import *
 from dateutil import parser as dateparser
 
 def get_commits():
+    """シェルからコミットログを取得してCommitオブジェクトにしてリストで返す"""
     commits = []
     commits_string = shellrun("git log")
     
@@ -28,6 +29,9 @@ def get_commits():
 
             
 def parse_commit(commitstring):
+    """シェルから取得したコミットログをパースして""" \
+    """コミットのハッシュ値、コミットした者、日付・時間、コミットコメント及び""" \
+    """マージした場合はsourceとdestinationを返す"""
     commitdata = [i for i in commitstring.split("\n") if i != "    "]
     parse_result = {}
     
@@ -101,17 +105,19 @@ def parse_commit(commitstring):
                 "comment"   : comment}
 
 def shellrun(command):
+    """コマンドをシェルで起動し、その出力を返す"""
     return commands.getoutput(command)
         
 
 def check_exist_repo():
+    """現在のディレクトリにgitリポジトリがあるかどうか、Booleanで返す"""
     if ".git" in os.listdir("."):
         return True
     else:
         return False
 
 def terminal_width():
-    """Return terminal width."""
+    """ターミナルの横幅をintで返す"""
     width = 0
     try:
         import struct
