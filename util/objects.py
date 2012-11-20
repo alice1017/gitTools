@@ -2,6 +2,7 @@
 #coding: utf-8
 
 class User(object):
+    """コミットした者の名前とメールアドレスを保持"""
     def __init__(self, name, email=None):
         self.name = name
         self.email = email
@@ -13,6 +14,8 @@ class User(object):
         return self.__repr__()
 
 class Commit(object):
+    """コミットのハッシュ値、製作者、日付時間、コミットコメント"""\
+    """マージしたのであればマージしたデータを保持"""
     def __init__(self, commithash, author, date, comment, merge_data=None):
         self.commithash = commithash
         self.author = self._get_user_obj(author)
