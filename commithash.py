@@ -7,7 +7,8 @@ import miniparser
 import util.core as core
 from util.color import *
 
-parser = miniparser.parser(version="1.0.1", description="This tools make you more usefull git")
+parser = miniparser.parser(
+        version="1.0.1", description="This tools make you more usefull git")
 
 @parser.command(description="You can show latest commit hash.")
 def latest():
@@ -20,14 +21,18 @@ def latest():
 def show_all():
     commits = core.get_commits()
     width = core.terminal_width()
-    header = "No  "+"Date".ljust(17)+"   "+"Hash".ljust(10)+"   Comment" 
+    author_length = list(sorted([len(i.author.name) for i in commits]))[-1]
+    header = "No  "+"Date".ljust(17)+"  "+\
+               "Author".ljust(author_length)+"  "+"Hash".ljust(10)+"  Comment" 
     print header
     print "-"*width
     for index, commit_obj in enumerate(commits):
-        print "%(index)s  %(date)s   %(hash)s   %(comment)s" % {
-            "index": yellow("0%d"%index) if index < 10 else yellow(index),
-            "date" : commit_obj.date.strftime("%y/%m/%d %H:%M:%S"),
-            "hash" : commit_obj.commithash[:10],
+        print "%(index)s  %(date)s  %(author)s  %(hash)s  %(comment)s" % {
+            "index" : yellow("0%d"%index) if index < 10 else yellow(index),
+            "date"  : commit_obj.date.strftime("%y/%m/%d %H:%M:%S"),
+            "author": commit_obj.author.name.ljust(6) if len(
+                       commit_obj.author.name) <= 6 else commit_obj.author.name,
+            "hash"  : commit_obj.commithash[:10],
             "comment": commit_obj.comment,
         }
 
