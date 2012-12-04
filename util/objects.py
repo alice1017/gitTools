@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #coding: utf-8
 
+
 class User(object):
     """コミットした者の名前とメールアドレスを保持"""
     def __init__(self, name, email=None):
@@ -12,6 +13,7 @@ class User(object):
                                     self.name, self.email)
     def __str__(self):
         return self.__repr__()
+
 
 class Commit(object):
     """コミットのハッシュ値、製作者、日付時間、コミットコメント"""\
@@ -39,3 +41,11 @@ class Commit(object):
     def __str__(self):
         return self.commithash
 
+
+class ProjectToDoSetter(object):
+    def __init__(self, hash, author, content, status, created_at):
+        self.id = hash
+        self.author = author
+        self.content = content
+        self.status = status
+        self.created_at = created_at
