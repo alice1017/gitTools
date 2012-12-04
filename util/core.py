@@ -9,14 +9,9 @@ from subprocess import Popen
 from subprocess import PIPE
 
 
-def shellrun(command):
+def shellrun(*commands):
     """コマンドをシェルで起動し、その出力を返す"""
-    if isinstance(command, list) or isinstance(command, tuple):
-        proc = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-
-    elif isinstance(command, str):
-        cmd = command.split(" ")
-        proc = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    proc = Popen(commands, stdin=PIPE, stdout=PIPE, stderr=PIPE)
     
     out, err = proc.communicate()
     if len(err) == 0:
@@ -24,13 +19,6 @@ def shellrun(command):
     else:
         raise SystemError(err)
         
-
-def check_exist_repo():
-    """現在のディレクトリにgitリポジトリがあるかどうか、Booleanで返す"""
-    if ".git" in os.listdir("."):
-        return True
-    else:
-        return False
 
 def terminal_width():
     """ターミナルの横幅をintで返す"""

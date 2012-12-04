@@ -34,3 +34,12 @@ def make_hash(data):
     hash = git("hash-object", "--stdin", input=data)
     return hash
 
+def check_exist_repo():
+    """現在のディレクトリにgitリポジトリがあるかどうか、Booleanで返す"""
+    boolean = git("rev-parse", "--is-inside-work-tree")
+    if boolean == "true":
+        return True
+    else:
+        return False
+
+
