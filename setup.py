@@ -6,7 +6,7 @@ from distutils.core import setup
 
 
 class Information(object):
-    version = "1.0.1"
+    version = "1.0.2.1"
     author = "alice1017"
     author_github = "http://github.com/alice1017"
     author_twitter = "http://twitter.com/alice1017"
@@ -34,7 +34,7 @@ setup(
     download_url = info.author_github+"/gitTools",
     description = info.description,
     long_description = info.long_description,
-    py_modules = ['commithash', 'util.core', 'util.color'],
+    py_modules = ['commithash', 'util.core', 'util.color', 'util.objects', 'util.git', 'util.adjust'],
     scripts = ['bin/commithash'],
-    install_requires = ['termcolor', 'miniparser']
+    install_requires = ['termcolor', 'miniparser'],
 )
