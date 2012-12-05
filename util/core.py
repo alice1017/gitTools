@@ -39,10 +39,9 @@ def terminal_width():
             width = 80
     return width
 
-def save_state(todolist, fp):
-    """ProjectToDoSetterオブジェクトのリストとファイルポインタを引数にわたして
-    シリアライズしてファイルに上書きする"""
-    pickle.dump(todolist, fp)
+def save_state(object, fp):
+    """オブジェクトとファイルポインタを引数にわたしてシリアライズしてファイルに上書きする"""
+    pickle.dump(object, fp)
     return True
 
 
