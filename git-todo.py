@@ -35,7 +35,7 @@ def initialize():
 
 
 @parser.option("new",
-    description="create new todo, Please write TODO content at argument.")
+    description="Create new todo, Please write TODO content at argument.")
 def create(content):
     # ------------------------------------------------
     # ToDo object
@@ -47,11 +47,6 @@ def create(content):
     #   5. closed_at(datetime)    - datetime when close todo
     #   6. closing_commit(str)    - commit hash when closed todo
     # ------------------------------------------------
-
-    if os.access(CACHE_FILE_PATH, os.F_OK) != True:
-        print "The repository does not todo initialized yet."
-        print "Please do 'git todo init'"
-        kill(1)
 
     # get todo container
     todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
@@ -69,12 +64,9 @@ def create(content):
     todo_container.append(todo_obj)
     core.save_state(todo_container, open(CACHE_FILE_PATH,"w"))
 
-@parser.option("ls","list", description="You can show all todos.")
+
+@parser.option("ls","list", description="Show all todos.")
 def showall():
-    if os.access(CACHE_FILE_PATH, os.F_OK) != True:
-        print "The repository does not todo initialized yet."
-        print "Please do 'git todo init'"
-        kill(1)
 
     # get todo container
     todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
@@ -92,7 +84,40 @@ def showall():
                                               else red(todo.status)),
               "hashid"     : todo.hashid[:10],
               "content"    : todo.content,
-                }
+        }
+
+@parser.option("info", description="Show more information about todo",
+                                            argument_types={"index": int})
+def todo_information(index):
+    # get todo container
+    todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
+
+    if index > len(todo_container):
+        print "The Index value is over the number of todo."
+        kill(1)
+        
+    todo = todo_container[index]
+    header = "[%s] %s" % (yellow(index), todo.content)
+    print header
+    print "-"*core.terminal_width()
+
+    print "Status:".rjust(26), (blue(todo.status) if todo.status == "OPEN"
+                                                        else red(todo.status))
+    print "Created at:".rjust(26), todo.created_at
+    print "Todo Hash Id:".rjust(26), magenta(todo.hashid)
+    print "Git Commit When ToDo OPEN:".rjust(26), green(todo.correlate_commit)
+
+    if todo.status == "CLOSED":
+        print "Closed at:".rjust(26), todo.closed_at
+        print "Git Commit When ToDo CLOSE:".rjust(26), green(todo.closing_commit)
+    
+
+@parser.option("close", description="Update todo status from OPEN to CLOSE.",
+                                                    argument_types={"index": int})
+def close_todo(index):
+    pass
+
+
 
 @parser.option("alldelete",
     description="This is Only Development option. You can delete all ToDo data")
@@ -106,6 +131,11 @@ def alldeelete():
 if __name__ == "__main__":
     if check_exist_repo() == False:
         print yellow("There is not git repository!")
-        miniparser.kill(1)
+        kill(1)
+
+    if os.access(CACHE_FILE_PATH, os.F_OK) != True:
+        print "The repository does not todo initialized yet."
+        print "Please do 'git todo init'"
+        kill(1)
 
     parser.parse()
