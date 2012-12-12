@@ -31,7 +31,7 @@ def show_all():
     print "-"*width
     for index, commit_obj in enumerate(commits):
         print "%(index)s  %(date)s  %(author)s  %(hash)s  %(comment)s" % {
-            "index" : yellow("0%d"%index) if index < 10 else yellow(index),
+            "index" : yellow(index) if index >= 100 else yellow("0%d"%index) if index > 10 else yellow("00%d"%index),
             "date"  : commit_obj.date.strftime("%y/%m/%d %H:%M:%S"),
             "author": commit_obj.author.name.ljust(6) if len(
                        commit_obj.author.name) <= 6 else commit_obj.author.name,
