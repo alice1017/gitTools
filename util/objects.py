@@ -42,10 +42,21 @@ class Commit(object):
         return self.commithash
 
 
-class ProjectToDoSetter(object):
-    def __init__(self, hash, author, content, status, created_at):
-        self.id = hash
-        self.author = author
-        self.content = content
-        self.status = status
-        self.created_at = created_at
+class Todo(object):
+    def __init__(self, hashid, content, created_at, status, correlate_commit, closed_at, closing_commit):
+        self.hashid           = hashid
+        self.content          = content
+        self.created_at       = created_at
+        self.status           = status
+        self.correlate_commit = correlate_commit
+        self.closed_at        = closed_at
+        self.closing_commit   = closing_commit
+    
+    def __repr__(self):
+        context = "id='%s', " % self.hashid
+        context += "content='%s', " % self.content
+        context += "created_at='%s', " % self.created_at.strftime("20%y/%m/%d-%H:%M:%S")
+        context += "status='%s', " % self.status
+        context += "correlate_commit='%s'" % self.correlate_commit
+        return 'Todo(%s)' % context
+                    
