@@ -32,13 +32,13 @@ def show_all():
     author_length = list(sorted([len(i.author.name) for i in commits]))[-1]
     number_length = len(str(len(commits)))+1 # コミットの長さの桁数
 
-    header = "#".ljust(number_length)+" "+"Date".ljust(17)+"  "+\
+    header = "#".ljust(number_length)+" "+"Date".ljust(19)+"  "+\
                "Author".ljust(author_length)+"  "+"Hash".ljust(10)+"  Comment" 
     timeformat = core.isoformat.replace("-"," ")
 
     sys.stdout = io
     print header
-    print "-"*width
+    print "-"*(width-1)
     for index, commit_obj in enumerate(commits):
         print "%(index)s %(date)s  %(author)s  %(hash)s  %(comment)s" % {
             "index"  : yellow(index)+" "*(number_length-len(str(index))),
