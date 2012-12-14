@@ -50,4 +50,4 @@ def get_pager():
         # parger設定をしていない
         return "less"
     else:
-        return out[:-1]
+        return out
