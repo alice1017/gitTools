@@ -86,8 +86,8 @@ def showall():
 
     author_length = list(sorted([len(i.author) for i in todo_container]))[-1]
     
-    header = "#  "+"Date".ljust(21)+"Author".ljust(author_length)+"Stat".ljust(8)+"Hash".ljust(12)+"Content"
-    title = "%(index)s  %(created_at)s %(author)s  %(status)s  %(hashid)s  %(content)s"
+    header = "#  "+"Date".ljust(21)+"Author".ljust(author_length)+" "+"Stat".ljust(8)+"Hash".ljust(12)+"Content"
+    title = "%(index)s  %(created_at)s  %(author)s  %(status)s  %(hashid)s  %(content)s"
 
     print header
     print "-"*core.terminal_width()
@@ -121,7 +121,8 @@ def todo_information(index):
         kill(1)
         
     todo = todo_container[index]
-    header = "[%(status)s] %(index)s %(content)s" % {
+    header = "%(author)s [%(status)s] %(index)s %(content)s" % {
+                "author": magenta(todo.author),
                 "status": (blue(todo.status) if todo.status == "OPEN" 
                                                         else red(todo.status)),
                 "index": yellow("#%d"%index),
@@ -142,18 +143,7 @@ def todo_information(index):
                     todo.created_at.strftime(timeformat)
         print "Commit when "+red("closed"), ":", todo.closing_commit[:10]
 
-    # print "Status:".rjust(26), (blue(todo.status) if todo.status == "OPEN"
-    #                                                     else red(todo.status))
-    # print 
-    # print "Created at:".rjust(26), todo.created_at
-    # print "Todo Hash Id:".rjust(26), magenta(todo.hashid)
-    # print "Git Commit When OPEN:".rjust(26), green(todo.correlate_commit)
-
-    # if todo.status == "CLOSED":
-    #     print ""
-    #     print "Closed at:".rjust(26), todo.closed_at
-    #     print "Git Commit When CLOSE:".rjust(26), green(todo.closing_commit)
-    
+        
 
 @parser.option("close", description="Update todo status from OPEN to CLOSE.",
                                                     argument_types={"index": int})
