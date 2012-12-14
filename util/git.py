@@ -51,3 +51,8 @@ def get_pager():
         return None
     else:
         return out
+
+def get_author():
+    """gitで使用しているAuthorを返す"""
+    out = git("config", "user.name")
+    return out
