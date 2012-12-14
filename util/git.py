@@ -45,7 +45,7 @@ def check_exist_repo():
 def get_pager():
     """gitが使用しているpagerを取得して返す。""" \
     """pagerの設定をしていない場合はlessを返す"""
-    out,err = git("config", "core.pager")
+    out = git("config", "core.pager")
     if len(out) == 0:
         # parger設定をしていない
         return "less"
