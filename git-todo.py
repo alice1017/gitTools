@@ -112,6 +112,9 @@ def todo_information(index):
 
     # get todo container
     todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
+    if len(todo_container) == 0:
+        print "There is not ToDo."
+        kill(1)
 
     if index > len(todo_container):
         print "The Index value is over the number of todo."
@@ -162,6 +165,9 @@ def close_todo(index):
 
     # get todo container
     todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
+    if len(todo_container) == 0:
+        print "There is not ToDo."
+        kill(1)
 
     if index > len(todo_container):
         print "The Index value is over the number of todo."
