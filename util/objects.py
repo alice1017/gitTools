@@ -43,9 +43,10 @@ class Commit(object):
 
 
 class Todo(object):
-    def __init__(self, hashid, content, created_at, status, correlate_commit, closed_at, closing_commit):
+    def __init__(self, hashid, content, author, created_at, status, correlate_commit, closed_at, closing_commit):
         self.hashid           = hashid
         self.content          = content
+        self.author           = author
         self.created_at       = created_at
         self.status           = status
         self.correlate_commit = correlate_commit
@@ -53,10 +54,11 @@ class Todo(object):
         self.closing_commit   = closing_commit
     
     def __repr__(self):
-        context = "id='%s', " % self.hashid
-        context += "content='%s', " % self.content
-        context += "created_at='%s', " % self.created_at.strftime(core.isoformat)
-        context += "status='%s', " % self.status
+        context =  "id='%s', "             % self.hashid
+        context += "content='%s', "        % self.content
+        context += "author='%s', "         % self.author
+        context += "created_at='%s', "     % self.created_at.strftime(core.isoformat)
+        context += "status='%s', "         % self.status
         context += "correlate_commit='%s'" % self.correlate_commit
         return 'Todo(%s)' % context
                     
