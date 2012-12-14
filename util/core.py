@@ -8,6 +8,7 @@ from objects  import *
 from subprocess import Popen
 from subprocess import PIPE
 
+isoformat = "%Y/%m/%d-%H:%M:%S"
 
 def shellrun(*commands):
     """コマンドをシェルで起動し、その出力を返す"""

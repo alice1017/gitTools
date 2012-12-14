@@ -55,7 +55,7 @@ class Todo(object):
     def __repr__(self):
         context = "id='%s', " % self.hashid
         context += "content='%s', " % self.content
-        context += "created_at='%s', " % self.created_at.strftime("20%y/%m/%d-%H:%M:%S")
+        context += "created_at='%s', " % self.created_at.strftime(core.isoformat)
         context += "status='%s', " % self.status
         context += "correlate_commit='%s'" % self.correlate_commit
         return 'Todo(%s)' % context
