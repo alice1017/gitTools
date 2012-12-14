@@ -2,6 +2,7 @@
 #coding: utf-8
 
 import os
+import sys
 import commands
 import miniparser
 
@@ -9,6 +10,7 @@ from util import core
 from util import adjust
 from util.git import *
 from util.color import *
+from StringIO import StringIO
 
 parser = miniparser.parser(
         version="1.0.1", description="This tools make you more usefull git")
@@ -23,6 +25,8 @@ def latest():
     description="You can show all commit hash with date, comment")
 def show_all():
     commits = adjust.get_commits()
+    pager = get_pager()
+    io = StringIO()
 
     width = core.terminal_width()
     author_length = list(sorted([len(i.author.name) for i in commits]))[-1]
@@ -30,17 +34,27 @@ def show_all():
 
     header = "#".ljust(number_length)+" "+"Date".ljust(17)+"  "+\
                "Author".ljust(author_length)+"  "+"Hash".ljust(10)+"  Comment" 
+    timeformat = core.isoformat.replace("-"," ")
+
+    sys.stdout = io
     print header
     print "-"*width
     for index, commit_obj in enumerate(commits):
         print "%(index)s %(date)s  %(author)s  %(hash)s  %(comment)s" % {
-            "index" : yellow(index)+" "*(number_length-len(str(index))),
-            "date"  : commit_obj.date.strftime("%y/%m/%d %H:%M:%S"),
-            "author": commit_obj.author.name.ljust(6) if len(
+            "index"  : yellow(index)+" "*(number_length-len(str(index))),
+            "date"   : commit_obj.date.strftime(timeformat),
+            "author" : commit_obj.author.name.ljust(6) if len(
                        commit_obj.author.name) <= 6 else commit_obj.author.name,
-            "hash"  : commit_obj.commithash[:10],
+            "hash"   : commit_obj.commithash[:10],
             "comment": commit_obj.comment,
         }
+
+    sys.stdout = sys.__stdout__
+    if pager == None:
+        print io.getvalue()[:-1]
+    else:
+        proc = Popen(pager.split(" "), stdin=PIPE, stderr=PIPE)
+        proc.communicate(io.getvalue()[:-1])
 
 @parser.option(
     "get", 
