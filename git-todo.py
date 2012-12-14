@@ -71,7 +71,7 @@ def showall():
     # get todo container
     todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
     
-    header = "#  "+"Date".ljust(21)+"Stat".ljust(6)+"Hash".ljust(12)+"Content"
+    header = "#  "+"Date".ljust(21)+"Stat".ljust(8)+"Hash".ljust(12)+"Content"
     title = "%(index)s  %(created_at)s  %(status)s  %(hashid)s  %(content)s"
 
     print header
@@ -79,8 +79,8 @@ def showall():
     for index, todo in enumerate(todo_container):
         print title % {
               "index"      : yellow(index),
-              "created_at" : todo.created_at.strftime("20%y/%m/%d %H:%M:%S"),
-              "status"     : (blue(todo.status) if todo.status == "OPEN"
+              "created_at" : todo.created_at.strftime(core.isoformat),
+              "status"     : (blue(todo.status)+"  " if todo.status == "OPEN"
                                               else red(todo.status)),
               "hashid"     : todo.hashid[:10],
               "content"    : todo.content,
@@ -97,26 +97,67 @@ def todo_information(index):
         kill(1)
         
     todo = todo_container[index]
-    header = "[%s] %s" % (yellow(index), todo.content)
+    header = "[%(status)s] %(index)s %(content)s" % {
+                "status": (blue(todo.status) if todo.status == "OPEN" 
+                                                        else red(todo.status)),
+                "index": yellow("#%d"%index),
+                "content": todo.content }
+    timeformat = core.isoformat.replace("-"," ")
+
+    # header
+    print 
     print header
     print "-"*core.terminal_width()
 
-    print "Status:".rjust(26), (blue(todo.status) if todo.status == "OPEN"
-                                                        else red(todo.status))
-    print "Created at:".rjust(26), todo.created_at
-    print "Todo Hash Id:".rjust(26), magenta(todo.hashid)
-    print "Git Commit When ToDo OPEN:".rjust(26), green(todo.correlate_commit)
-
+    # data
+    print "ToDo was "+blue("opened")+" at", ":", \
+                    todo.created_at.strftime(timeformat)
+    print "Commit when "+blue("opened"), ":", todo.correlate_commit[:10]
     if todo.status == "CLOSED":
-        print "Closed at:".rjust(26), todo.closed_at
-        print "Git Commit When ToDo CLOSE:".rjust(26), green(todo.closing_commit)
+        print "ToDo was "+red("closed")+" at", ":", \
+                    todo.created_at.strftime(timeformat)
+        print "Commit when "+red("closed"), ":", todo.closing_commit[:10]
+
+    # print "Status:".rjust(26), (blue(todo.status) if todo.status == "OPEN"
+    #                                                     else red(todo.status))
+    # print 
+    # print "Created at:".rjust(26), todo.created_at
+    # print "Todo Hash Id:".rjust(26), magenta(todo.hashid)
+    # print "Git Commit When OPEN:".rjust(26), green(todo.correlate_commit)
+
+    # if todo.status == "CLOSED":
+    #     print ""
+    #     print "Closed at:".rjust(26), todo.closed_at
+    #     print "Git Commit When CLOSE:".rjust(26), green(todo.closing_commit)
     
 
 @parser.option("close", description="Update todo status from OPEN to CLOSE.",
                                                     argument_types={"index": int})
 def close_todo(index):
-    pass
+    # get todo container
+    todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
 
+    if index > len(todo_container):
+        print "The Index value is over the number of todo."
+        kill(1)
+
+    # check already closed
+    if todo_container[index].status == "CLOSED":
+        print "This ToDo is already closed."
+        kill(1)
+
+    # confirm
+    print "Now you wanna closing '%s' Todo." % todo_container[index].hashid[:10]
+    confirm = raw_input("Are you really OK? (y/n) >> ")
+    
+    if confirm == "y":
+        todo_container[index].status = "CLOSED"
+        todo_container[index].closing_commit = adjust.get_latest_commit().commithash
+        todo_container[index].closed_at = datetime.now()
+        core.save_state(todo_container, open(CACHE_FILE_PATH,"w"))
+
+    else:
+        print "discontinued."
 
 
 @parser.option("alldelete",
