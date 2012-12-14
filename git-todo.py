@@ -80,6 +80,10 @@ def showall():
 
     # get todo container
     todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
+    if len(todo_container) == 0:
+        print "There is not ToDo."
+        kill(1)
+
     author_length = list(sorted([len(i.author) for i in todo_container]))[-1]
     
     header = "#  "+"Date".ljust(21)+"Author".ljust(author_length)+"Stat".ljust(8)+"Hash".ljust(12)+"Content"
