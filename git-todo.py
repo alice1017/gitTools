@@ -85,6 +85,7 @@ def showall():
         kill(1)
 
     author_length = list(sorted([len(i.author) for i in todo_container]))[-1]
+    timeformat = core.isoformat.replace("-"," ")
     
     header = "#  "+"Date".ljust(21)+"Author".ljust(author_length)+" "+"Stat".ljust(8)+"Commit".ljust(12)+"Content"
     title = "%(index)s  %(created_at)s  %(author)s  %(status)s  %(commit)s  %(content)s"
@@ -94,7 +95,7 @@ def showall():
     for index, todo in enumerate(todo_container):
         print title % {
               "index"      : yellow(index),
-              "created_at" : todo.created_at.strftime(core.isoformat),
+              "created_at" : todo.created_at.strftime(timeformat),
               "author"     : todo.author,
               "status"     : (blue(todo.status)+"  " if todo.status == "OPEN"
                                               else red(todo.status)),
