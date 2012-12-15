@@ -86,8 +86,8 @@ def showall():
 
     author_length = list(sorted([len(i.author) for i in todo_container]))[-1]
     
-    header = "#  "+"Date".ljust(21)+"Author".ljust(author_length)+" "+"Stat".ljust(8)+"Hash".ljust(12)+"Content"
-    title = "%(index)s  %(created_at)s  %(author)s  %(status)s  %(hashid)s  %(content)s"
+    header = "#  "+"Date".ljust(21)+"Author".ljust(author_length)+" "+"Stat".ljust(8)+"Commit".ljust(12)+"Content"
+    title = "%(index)s  %(created_at)s  %(author)s  %(status)s  %(commit)s  %(content)s"
 
     print header
     print "-"*core.terminal_width()
@@ -98,7 +98,8 @@ def showall():
               "author"     : todo.author,
               "status"     : (blue(todo.status)+"  " if todo.status == "OPEN"
                                               else red(todo.status)),
-              "hashid"     : todo.hashid[:10],
+              "commit"     : (blue(todo.correlate_commit[:10]) if todo.status == "OPEN"
+                                              else red(todo.closing_commit[:10])),
               "content"    : todo.content,
         }
 
