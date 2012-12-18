@@ -118,34 +118,32 @@ def todo_information(index):
         print "There is not ToDo."
         kill(1)
 
-    if index > len(todo_container):
+    if index > len(todo_container)-1:
         print "The Index value is over the number of todo."
         kill(1)
         
     todo = todo_container[index]
-    header = "%(author)s [%(status)s] %(index)s %(content)s" % {
-                "author": magenta(todo.author),
-                "status": (blue(todo.status) if todo.status == "OPEN" 
-                                                        else red(todo.status)),
-                "index": yellow("#%d"%index),
-                "content": todo.content }
     timeformat = core.isoformat.replace("-"," ")
 
-    # header
-    print 
-    print header
+    print "%s" % yellow("#%d"%index)
+    print "[%s]" % (blue(todo.status) if todo.status == "OPEN"
+                                        else red(todo.status)),
+    print todo.content
     print "-"*core.terminal_width()
-
-    # data
-    print "ToDo was "+blue("opened")+" at", ":", \
-                    todo.created_at.strftime(timeformat)
-    print "Commit when "+blue("opened"), ":", todo.correlate_commit[:10]
+    
+    print "Author".ljust(13),":",magenta(todo.author)
+    print "Created at".ljust(13), ":", todo.created_at.strftime(
+                                                     timeformat)
     if todo.status == "CLOSED":
-        print "ToDo was "+red("closed")+" at", ":", \
-                    todo.created_at.strftime(timeformat)
-        print "Commit when "+red("closed"), ":", todo.closing_commit[:10]
+        print "Closed at".ljust(13), ":", todo.closed_at.strftime(
+                                                            timeformat)
+    print "Opened commit", ":", blue(todo.correlate_commit)
 
-        
+    if todo.status == "CLOSED":
+        print "Closed commit", ":", red(todo.closing_commit)
+        print "-"*core.terminal_width()
+        print get_commit_diff(todo.closing_commit)
+
 
 @parser.option("close", description="Update todo status from OPEN to CLOSE.",
                                                     argument_types={"index": int})
