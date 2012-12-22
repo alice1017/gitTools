@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #coding: utf-8
 
+from color import *
 from subprocess import Popen
 from subprocess import PIPE
 
@@ -56,3 +57,17 @@ def get_author():
     """gitで使用しているAuthorを返す"""
     out = git("config", "user.name")
     return out
+
+def get_commit_diff(commithash):
+    """コミットのhashを渡して、'git show {hash}'コマンドの結果を返す"""
+    result = git("show", commithash)
+    content = result[result.index("@@"):]
+    lines = content.split("\n")
+    for index, line in enumerate(lines):
+        if line.startswith("+"):
+            lines[index] = green(line)
+        elif line.startswith("-"):
+            lines[index] = red(line)
+
+    return "\n".join(lines)
+    
