@@ -48,9 +48,9 @@ def create(content):
     #   2. content(str)           - todo content string
     #   3. created_at(datetime)   - datetime when open todo
     #   4. status(str)            - open or close
-    #   4. correlate_commit(str)  - commit hash when created todo
+    #   4. opened_commit(str)  - commit hash when created todo
     #   5. closed_at(datetime)    - datetime when close todo
-    #   6. closing_commit(str)    - commit hash when closed todo
+    #   6. closed_commit(str)    - commit hash when closed todo
     # ------------------------------------------------
 
     # get todo container
@@ -62,9 +62,9 @@ def create(content):
     todo_info["author"] = get_author()
     todo_info["created_at"] = datetime.now()
     todo_info["status"] = "OPEN"
-    todo_info["correlate_commit"] = adjust.get_latest_commit().commithash
+    todo_info["opened_commit"] = adjust.get_latest_commit().commithash
     todo_info["closed_at"] = None
-    todo_info["closing_commit"] = None
+    todo_info["closed_commit"] = None
 
     todo_obj = Todo(**todo_info)
     todo_container.append(todo_obj)
@@ -99,8 +99,8 @@ def showall():
               "author"     : todo.author,
               "status"     : (blue(todo.status)+"  " if todo.status == "OPEN"
                                               else red(todo.status)),
-              "commit"     : (blue(todo.correlate_commit[:10]) if todo.status == "OPEN"
-                                              else red(todo.closing_commit[:10])),
+              "commit"     : (blue(todo.opened_commit[:10]) if todo.status == "OPEN"
+                                              else red(todo.closed_commit[:10])),
               "content"    : todo.content,
         }
 
@@ -137,12 +137,12 @@ def todo_information(index):
     if todo.status == "CLOSED":
         print "Closed at".ljust(13), ":", todo.closed_at.strftime(
                                                             timeformat)
-    print "Opened commit", ":", blue(todo.correlate_commit)
+    print "Opened commit", ":", blue(todo.opened_commit)
 
     if todo.status == "CLOSED":
-        print "Closed commit", ":", red(todo.closing_commit)
+        print "Closed commit", ":", red(todo.closed_commit)
         print "-"*core.terminal_width()
-        print get_commit_diff(todo.closing_commit)
+        #print get_commit_diff(todo.closed_commit)
 
 
 @parser.option("close", description="Update todo status from OPEN to CLOSE.",
@@ -174,7 +174,7 @@ def close_todo(index):
     
     if confirm == "y":
         todo_container[index].status = "CLOSED"
-        todo_container[index].closing_commit = adjust.get_latest_commit().commithash
+        todo_container[index].closed_commit = adjust.get_latest_commit().commithash
         todo_container[index].closed_at = datetime.now()
         core.save_state(todo_container, open(CACHE_FILE_PATH,"w"))
 
