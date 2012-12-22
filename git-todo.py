@@ -46,11 +46,12 @@ def create(content):
     # ToDo object
     #   1. id (str)               - git hash-object
     #   2. content(str)           - todo content string
-    #   3. created_at(datetime)   - datetime when open todo
-    #   4. status(str)            - open or close
-    #   4. opened_commit(str)  - commit hash when created todo
-    #   5. closed_at(datetime)    - datetime when close todo
-    #   6. closed_commit(str)    - commit hash when closed todo
+    #   3. author(str)            - the author name that create todo
+    #   4. created_at(datetime)   - datetime when open todo
+    #   5. status(str)            - open or close
+    #   6. opened_commit(str)     - commit hash when created todo
+    #   7. closed_at(datetime)    - datetime when close todo
+    #   8. closed_commit(str)     - commit hash when closed todo
     # ------------------------------------------------
 
     # get todo container
