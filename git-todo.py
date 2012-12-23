@@ -2,15 +2,18 @@
 #coding: utf-8
 
 import os
+import sys
 import miniparser
 
 from util import core
 from util import adjust
 from util import objects
-
 from util.git import *
 from util.color import *
 from util.objects import Todo
+
+from subprocess import Popen, PIPE
+from StringIO import StringIO
 from datetime import datetime
 from sys import exit as kill
 
@@ -182,6 +185,57 @@ def close_todo(index):
     else:
         print "discontinued."
 
+
+@parser.option("log",
+    description="You can show commit log with when your ToDo opened or closed")
+def show_log():
+    if os.access(CACHE_FILE_PATH, os.F_OK) != True:
+        print "The repository does not todo initialized yet."
+        print "Please do 'git todo init'"
+        kill(1)
+
+    todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
+    commits = adjust.get_commits()
+    pager = get_pager()
+    isoformat = "%a %b %d %H:%M:%S %Y %z"
+    
+
+    io = StringIO()
+    sys.stdout = io
+
+    for commit in commits:
+        print yellow("commit: %s" % commit.commithash)
+
+        opened_commits = ([blue(t.opened_commit[:10]) for t in todo_container \
+                                if t.opened_commit == commit.commithash])
+        closed_commits = ([red(t.closed_commit[:10]) for t in todo_container \
+                                if t.closed_commit == commit.commithash])
+
+        if len(opened_commits) != 0:
+            print "Opened ToDo: %s" % ", ".join(opened_commits)
+        if len(closed_commits) != 0:
+            print "Closed ToDo: %s" % ", ".join(closed_commits)
+
+        if commit.merge_data != None:
+            print "Merge: %s" % " ".join(commit.merge_data)
+            print "Author: %s <%s>" % (
+                    commit.author.name,
+                    commit.author.email)
+        else:
+            print "Author: %s <%s>" %  (
+                    commit.author.name,
+                    commit.author.email)
+        print "Date: %s" % commit.date.strftime(isoformat)
+        print 
+        print commit.comment
+        print 
+    
+    sys.stdout = sys.__stdout__
+    if pager == None:
+        print io.getvalue()[:-1]
+    else:
+        proc = Popen(pager.split(" "), stdin=PIPE, stderr=PIPE)
+        proc.communicate(io.getvalue()[:-1])
 
 @parser.option("alldelete",
     description="This is Only Development option. You can delete all ToDo data")
