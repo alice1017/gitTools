@@ -3,6 +3,7 @@
 
 import os
 import cPickle as pickle
+import dateutil.tz as tz
 
 from objects  import *
 from subprocess import Popen
@@ -60,3 +61,6 @@ def create_file(path):
     return True
 
 
+def get_JSTtz():
+    """JSTのtzinfoを返す"""
+    return tz.tzoffset("JST",32400)
