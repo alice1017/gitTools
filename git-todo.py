@@ -206,9 +206,9 @@ def show_log():
     for commit in commits:
         print yellow("commit: %s" % commit.commithash)
 
-        opened_commits = ([blue(t.opened_commit[:10]) for t in todo_container \
+        opened_commits = ([blue(t.hashid[:10]) for t in todo_container \
                                 if t.opened_commit == commit.commithash])
-        closed_commits = ([red(t.closed_commit[:10]) for t in todo_container \
+        closed_commits = ([red(t.hashid[:10]) for t in todo_container \
                                 if t.closed_commit == commit.commithash])
 
         if len(opened_commits) != 0:
