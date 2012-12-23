@@ -29,7 +29,7 @@ class Commit(object):
         if " " in author_string:
             lines = author_string.split(" ")
             name = lines[0]
-            email = lines[1]
+            email = lines[1][1:-1]
             return User(name, email)
         else:
             return User(author_string)
