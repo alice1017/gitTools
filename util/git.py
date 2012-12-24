@@ -71,3 +71,7 @@ def get_commit_diff(commithash):
 
     return "\n".join(lines)
     
+def put_tag(tagstring):
+    """tagstringを指定してタグを打つ"""
+    git("tag",tagstring)
+    return True
