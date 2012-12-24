@@ -91,8 +91,8 @@ def showall():
     author_length = list(sorted([len(i.author) for i in todo_container]))[-1]
     timeformat = core.isoformat.replace("-"," ")
     
-    header = "#  "+"Date".ljust(21)+"Author".ljust(author_length)+" "+"Stat".ljust(8)+"Commit".ljust(12)+"Content"
-    title = "%(index)s  %(created_at)s  %(author)s  %(status)s  %(commit)s  %(content)s"
+    header = "Date".ljust(21)+"Author".ljust(author_length)+" "+"Stat".ljust(8)+"Commit".ljust(12)+"#  "+"Content"
+    title = "%(created_at)s  %(author)s  %(status)s  %(commit)s  %(index)s  %(content)s"
 
     print header
     print "-"*core.terminal_width()
@@ -136,6 +136,7 @@ def todo_information(index):
     print "-"*core.terminal_width()
     
     print "Author".ljust(13),":",magenta(todo.author)
+    print "Primary Id".ljust(13),":",todo.hashid
     print "Created at".ljust(13), ":", todo.created_at.strftime(
                                                      timeformat)
     if todo.status == "CLOSED":
@@ -172,18 +173,14 @@ def close_todo(index):
         print "This ToDo is already closed."
         kill(1)
 
-    # confirm
-    print "Now you wanna closing '%s' Todo." % todo_container[index].hashid[:10]
-    confirm = raw_input("Are you really OK? (y/n) >> ")
-    
-    if confirm == "y":
-        todo_container[index].status = "CLOSED"
-        todo_container[index].closed_commit = adjust.get_latest_commit().commithash
-        todo_container[index].closed_at = datetime.now()
-        core.save_state(todo_container, open(CACHE_FILE_PATH,"w"))
+    # create tag
+    put_tag("ToDo#%d_close" % index)
 
-    else:
-        print "discontinued."
+    # change status
+    todo_container[index].status = "CLOSED"
+    todo_container[index].closed_commit = adjust.get_latest_commit().commithash
+    todo_container[index].closed_at = datetime.now()
+    core.save_state(todo_container, open(CACHE_FILE_PATH,"w"))
 
 
 @parser.option("log",
