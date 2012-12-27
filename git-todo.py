@@ -174,7 +174,7 @@ def close_todo(index):
         kill(1)
 
     # create tag
-    put_tag("ToDo#%d_close" % index)
+    put_tag("ToDo#%d_close" % index, "Closed '%s' ToDo."%todo_container[index].content)
 
     # change status
     todo_container[index].status = "CLOSED"
