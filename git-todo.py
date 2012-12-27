@@ -102,10 +102,11 @@ def showall():
               "created_at" : todo.created_at.strftime(timeformat),
               "author"     : todo.author,
               "status"     : (blue(todo.status)+"  " if todo.status == "OPEN"
-                                              else red(todo.status)),
+                                                         else red(todo.status)),
               "commit"     : (blue(todo.opened_commit[:10]) if todo.status == "OPEN"
-                                              else red(todo.closed_commit[:10])),
-              "content"    : todo.content,
+                                             else red(todo.closed_commit[:10])),
+              "content"    : (red(todo.content) if todo.status == "CLOSED" 
+                                                             else todo.content),
         }
 
 @parser.option("info", description="Show more information about todo",
@@ -174,7 +175,7 @@ def close_todo(index):
         kill(1)
 
     # create tag
-    put_tag("ToDo#%d_close" % index, "Closed '%s' ToDo."%todo_container[index].content)
+    put_tag("ToDo#%d_close" % index)
 
     # change status
     todo_container[index].status = "CLOSED"
