@@ -25,6 +25,10 @@ parser = miniparser.parser(
 CACHE_FILE = os.path.join(git_directory(), "gitodo")
 CACHE_FILE_PATH = os.path.join(os.getcwd(), CACHE_FILE)
 
+@parser.default(description="Show all ToDos.")
+def default():
+    showall()
+
 @parser.option(
     "init",
     description="prepare for managing todo")
