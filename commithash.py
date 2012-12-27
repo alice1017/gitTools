@@ -43,8 +43,7 @@ def show_all():
         print "%(index)s %(date)s  %(author)s  %(hash)s  %(comment)s" % {
             "index"  : yellow(index)+" "*(number_length-len(str(index))),
             "date"   : commit_obj.date.strftime(timeformat),
-            "author" : commit_obj.author.name.ljust(6) if len(
-                       commit_obj.author.name) <= 6 else commit_obj.author.name,
+            "author" : commit_obj.author.name.ljust(author_length),
             "hash"   : commit_obj.commithash[:10],
             "comment": commit_obj.comment,
         }
