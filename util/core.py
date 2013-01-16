@@ -61,6 +61,3 @@ def create_file(path):
     return True
 
 
-def get_JSTtz():
-    """JSTのtzinfoを返す"""
-    return tz.tzoffset("JST",32400)
