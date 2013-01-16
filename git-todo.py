@@ -240,12 +240,17 @@ def show_log():
         proc.communicate(io.getvalue()[:-1])
 
 @parser.option("alldelete",
-    description="This is Only Development option. You can delete all ToDo data")
+    description=yellow("This is Only Development option.")+" You can delete all ToDo data")
 def alldeelete():
     if os.access(CACHE_FILE_PATH, os.F_OK) != True:
         print "The repository does not todo initialized yet."
         print "Please do 'git todo init'"
         kill(1)
+
+    # save todo container data to backup file
+    fp = open("todo_backup","w")
+    todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
+    core.save_state(todo_container, fp)
 
     # delete cache file
     if os.access(CACHE_FILE_PATH, os.F_OK):
@@ -253,6 +258,19 @@ def alldeelete():
 
     print "Complete"
 
+@parser.option("import",
+    description=yellow("This is Only Development option")+ \
+                    " You can import ToDo data from backup file.")
+def import_todo(backup_file):
+    if os.access(backup_file, os.F_OK) == False:
+        print "'%s' file is not found." % backup_file
+        kill(1)
+
+    fp = open(backup_file,"r")
+    todo_container = core.load_state(fp)
+    
+    core.save_state(todo_container, open(CACHE_FILE_PATH,"w"))
+    
 if __name__ == "__main__":
     if check_exist_repo() == False:
         print yellow("There is not git repository!")
