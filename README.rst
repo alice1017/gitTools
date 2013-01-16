@@ -24,7 +24,7 @@ commandhash
 
 　**ls** オプションを指定すると、 現在のgitリポジトリのコミットの一覧を見ることができます。
 
-.. image:: http://f.cl.ly/items/2y0T1O450q041V352221/%E3%82%B9%E3%83%8A%E3%83%83%E3%83%97%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%2012:12:15%2020:48-4.png
+.. image:: https://raw.github.com/alice1017/gitTools/master/ss/commithash.png
 
 .. sourcecode:: shellscript
 
