@@ -13,7 +13,8 @@ from util.color import *
 from StringIO import StringIO
 
 parser = miniparser.parser(
-        version="1.0.1", description="This tools make you more usefull git")
+        version="1.0.1", 
+        description="The commithash support operating git commit hash")
 
 @parser.default(description="You can show latest commit hash.")
 def latest():
