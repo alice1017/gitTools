@@ -199,6 +199,27 @@ def close_todo(index):
     core.save_state(todo_container, open(CACHE_FILE_PATH,"w"))
 
 
+@parser.option("del", description="delete ToDo", argument_types={"index": int})
+def delete(index):
+    if os.access(CACHE_FILE_PATH, os.F_OK) != True:
+        print "The repository does not todo initialized yet."
+        print "Please do 'git todo init'"
+        kill(1)
+
+    # get todo container
+    todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
+    if len(todo_container) == 0:
+        print "There is not ToDo."
+        kill(1)
+
+    if index > len(todo_container):
+        print "The Index value is over the number of todo."
+        kill(1)
+
+    todo_container.pop(index)
+    core.save_state(todo_container, open(CACHE_FILE_PATH,"w"))
+
+
 @parser.option("log",
     description="You can show commit log with when your ToDo opened or closed")
 def show_log():
