@@ -64,6 +64,15 @@ def create(content):
     # get todo container
     todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
 
+    for n,todo in enumerate(todo_container):
+        if todo.content == content:
+            print "fatal: this ToDo is duplicate."
+            print "Your appending ToDo: %s" % content
+            print "duplicate ToDo: %(index)s %(content)s" % {
+                    "index": yellow(n), "content":todo.content}
+            kill(1)
+
+
     todo_info = {}
     todo_info["hashid"] = make_hash(content)
     todo_info["content"] = content
