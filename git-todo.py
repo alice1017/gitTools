@@ -118,8 +118,8 @@ def showall():
               "author"     : todo.author.ljust(author_length),
               "status"     : (blue(todo.status)+"  " if todo.status == "OPEN"
                                                          else red(todo.status)),
-              "commit"     : (blue(todo.opened_commit[:10]) if todo.status == "OPEN"
-                                             else red(todo.closed_commit[:10])),
+              "commit"     : (blue(todo.opened_commit[:10])
+                    if todo.status == "OPEN" else red(todo.closed_commit[:10])),
               "content"    : (red(todo.content) if todo.status == "CLOSED" 
                                                              else todo.content),
         }
