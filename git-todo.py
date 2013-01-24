@@ -105,9 +105,14 @@ def showall():
     index_length = len(str(len(todo_container)))+1
     timeformat = core.isoformat.replace("-"," ")
     
-    header = "Date".ljust(21)+"Author".ljust(author_length)+" "+ \
-                    "Stat".ljust(8)+"Commit".ljust(12)+"#".ljust(index_length)+"Content"
-    title = "%(created_at)s  %(author)s  %(status)s  %(commit)s  %(index)s%(content)s"
+    header = "Date"  .ljust(21)+ \
+             "Author".ljust(author_length+2)+ \
+             "Stat"  .ljust(8)+ \
+             "Commit".ljust(12)+ \
+             "#"     .ljust(index_length)+ \
+             "Content"
+    title = "%(created_at)s  %(author)s  %(status)s  " \
+                                  "%(commit)s  %(index)s%(content)s"
 
     print header
     print "-"*core.terminal_width()
