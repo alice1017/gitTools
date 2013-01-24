@@ -23,7 +23,8 @@ def latest():
 
 @parser.option(
     "ls", 
-    description="You can show all commit hash with date, comment")
+    description="You can show all commit hash " \
+                   "with number, date, author, comment")
 def show_all():
     commits = adjust.get_commits()
     pager = get_pager()
