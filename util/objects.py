@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #coding: utf-8
 
+import core
 
 class User(object):
     """コミットした者の名前とメールアドレスを保持"""
