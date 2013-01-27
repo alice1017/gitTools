@@ -3,6 +3,7 @@
 
 from git import git
 from objects import *
+from color   import *
 from dateutil import parser as dateparser
 
 def get_commits():
@@ -94,5 +95,58 @@ def parse_commit(commitstring):
             "date"      : date,
             "comment"   : comment}
         
+
+def output_todolist(todo_container, sortby=None):
+    """ToDoが入っているcontainerを指定してToDoをリスト表示する。"""
+    """第二引数にsortするattributeを指定すればsortedの状態で表示される。"""
+
+    author_length = list(sorted([len(i.author) for i in todo_container]))[-1]
+    index_length = len(str(len(todo_container)))+1
+    timeformat = core.isoformat.replace("-"," ")
+
+    header = "Date"  .ljust(21)+ \
+             "Author".ljust(author_length+2)+ \
+             "Stat"  .ljust(8)+ \
+             "Commit".ljust(12)+ \
+             "#"     .ljust(index_length)+ \
+             "Content"
+    title = "%(created_at)s  %(author)s  %(status)s  " \
+                                  "%(commit)s  %(index)s%(content)s"
+
+    print header
+    print "-"*core.terminal_width()
+
+    sort_attributes = ["index","created_at",\
+                        "status-open","status-closed","commit"]
+    todo_container = zip(range(len(todo_container)),todo_container)
+
+    if (sortby is not None) and (sortby not in sort_attributes):
+        raise AttributeError("this attribute not defined to sort attribute.")
+
+    if sortby == "index":
+        pass
+
+    elif sortby == "created_at":
+        todo_container = map(
+                (lambda created_at: [(j,d)
+                   for j,d in todo_container if d.created_at == created_at][0]),
+                sorted([t.created_at for i,t in todo_container],reverse=True)
+        )
+
+    elif sortby == "status-open":
+        todo_container = [(i,t) for i,t in todo_container if t.status == "OPEN"]
+
+    for index, todo in todo_container:
+        print title % {
+              "index"      : yellow(str(index).ljust(index_length)),
+              "created_at" : todo.created_at.strftime(timeformat),
+              "author"     : todo.author.ljust(author_length),
+              "status"     : (blue(todo.status)+"  " if todo.status == "OPEN"
+                                                         else red(todo.status)),
+              "commit"     : (blue(todo.opened_commit[:10])
+                    if todo.status == "OPEN" else red(todo.closed_commit[:10])),
+              "content"    : (red(todo.content) if todo.status == "CLOSED"
+                                                             else todo.content),
+        }
 
 
