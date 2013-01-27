@@ -27,7 +27,18 @@ CACHE_FILE_PATH = os.path.join(os.getcwd(), CACHE_FILE)
 
 @parser.default(description="Show all ToDos.")
 def default():
-    showall()
+    if os.access(CACHE_FILE_PATH, os.F_OK) != True:
+        print "The repository does not todo initialized yet."
+        print "Please do 'git todo init'"
+        kill(1)
+
+    # get todo container
+    todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
+    if len(todo_container) == 0:
+        print "There is not ToDo."
+        kill(1)
+
+    adjust.output_todolist(todo_container, sortby="status-open")
 
 @parser.option(
     "init",
@@ -101,33 +112,8 @@ def showall():
         print "There is not ToDo."
         kill(1)
 
-    author_length = list(sorted([len(i.author) for i in todo_container]))[-1]
-    index_length = len(str(len(todo_container)))+1
-    timeformat = core.isoformat.replace("-"," ")
+    adjust.output_todolist(todo_container)
     
-    header = "Date"  .ljust(21)+ \
-             "Author".ljust(author_length+2)+ \
-             "Stat"  .ljust(8)+ \
-             "Commit".ljust(12)+ \
-             "#"     .ljust(index_length)+ \
-             "Content"
-    title = "%(created_at)s  %(author)s  %(status)s  " \
-                                  "%(commit)s  %(index)s%(content)s"
-
-    print header
-    print "-"*core.terminal_width()
-    for index, todo in enumerate(todo_container):
-        print title % {
-              "index"      : yellow(str(index).ljust(index_length)),
-              "created_at" : todo.created_at.strftime(timeformat),
-              "author"     : todo.author.ljust(author_length),
-              "status"     : (blue(todo.status)+"  " if todo.status == "OPEN"
-                                                         else red(todo.status)),
-              "commit"     : (blue(todo.opened_commit[:10])
-                    if todo.status == "OPEN" else red(todo.closed_commit[:10])),
-              "content"    : (red(todo.content) if todo.status == "CLOSED" 
-                                                             else todo.content),
-        }
 
 @parser.option("info", description="Show more information about todo",
                                             argument_types={"index": int})
