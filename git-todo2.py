@@ -23,8 +23,7 @@ parser = argparse.ArgumentParser(description="You can manage to \
 
 subparsers = parser.add_subparsers(
         title="git-todo commands",
-        dest="commands",
-        help=_("You can use these commands."))
+        dest="commands")
 
 cmd_init = subparsers.add_parser(
         "init", 
