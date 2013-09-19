@@ -107,11 +107,10 @@ def output_todolist(todo_container, sortby=None, nocolor=False):
     header = "Date"  .ljust(21)+ \
              "Author".ljust(author_length+2)+ \
              "Stat"  .ljust(8)+ \
-             "Commit".ljust(12)+ \
              "#"     .ljust(index_length)+ \
              "Content"
     title = "%(created_at)s  %(author)s  %(status)s  " \
-                                  "%(commit)s  %(index)s%(content)s"
+                                  " %(index)s%(content)s"
 
     print header
     print "-"*core.terminal_width()
@@ -144,7 +143,6 @@ def output_todolist(todo_container, sortby=None, nocolor=False):
                   "author"     : todo.author.ljust(author_length),
                   "status"     : (todo.status+"  " if todo.status == "OPEN"
                                                              else todo.status),
-                  "commit"     : todo.opened_commit[:10],
                   "content"    : todo.content
             }
         else:
@@ -154,8 +152,6 @@ def output_todolist(todo_container, sortby=None, nocolor=False):
                   "author"     : todo.author.ljust(author_length),
                   "status"     : (blue(todo.status)+"  " if todo.status == "OPEN"
                                                              else red(todo.status)),
-                  "commit"     : (blue(todo.opened_commit[:10])
-                        if todo.status == "OPEN" else red(todo.closed_commit[:10])),
                   "content"    : (red(todo.content) if todo.status == "CLOSED"
                                                                  else todo.content),
             }
