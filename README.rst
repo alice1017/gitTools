@@ -58,8 +58,7 @@ License : MIT License
 TODO
 #########
 
-.. include:: TODO
-    :literal:
+`こちらを参照 <https://github.com/alice1017/gitTools/blob/rewrite-parser/TODO>`_
 
 ChangeLog
 ##########
