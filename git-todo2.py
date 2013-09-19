@@ -33,7 +33,7 @@ cmd_init = subparsers.add_parser(
 cmd_add = subparsers.add_parser(
         "add",
         help=_("You can add new task. \
-                Please write task content at argument."))
+                Please write task content to argument."))
 cmd_add.add_argument(
         "content", 
         action="store", 
@@ -60,6 +60,16 @@ cmd_ls.add_argument(
                 You can make the sort element by string concatenate \
                 the sorter element name and sort order by colon. \
                 (ex. date:ascending, index:Descending, etc.)"))
+
+cmd_close = subparsers.add_parser(
+        "close",
+        help=_("You can close a task.\
+                Please write the task index to argument. \
+                If you close a task, this program put a tag \
+                what name is 'Todo#(todo-index)_close' on git. \
+                (ex. Todo#3_close, etc.) \
+                And this program changes status to CLOSED."))
+
 
 
 class ArgumentNamespace(object):
