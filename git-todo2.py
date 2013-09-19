@@ -69,6 +69,11 @@ cmd_close = subparsers.add_parser(
                 what name is 'Todo#(todo-index)_close' on git. \
                 (ex. Todo#3_close, etc.) \
                 And this program changes status to CLOSED."))
+cmd_close.add_argument(
+        "index",
+        action="store",
+        type=int,
+        help=_("The task index. this is INT type only."))
 
 
 
