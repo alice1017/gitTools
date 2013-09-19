@@ -86,6 +86,9 @@ class ArgumentNamespace(object):
         return "ArgumentNamespace(%s)" % ", ".join([k+"='%s'"%v for k,v in vars(self).iteritems()])
 
 if __name__ == "__main__":
+    if len(sys.argv) == 1:
+        parser.parse_args(["-h"])
+
     args = parser.parse_args(namespace=ArgumentNamespace())
     print args
 
