@@ -47,11 +47,6 @@ commithashの便利な使い方
 
 　このgitToolsはこれからもっと増えていく予定です。
 
-Tasks
-###########
-
-.. include:: TODO
-
 
 Copyright and License
 #######################
