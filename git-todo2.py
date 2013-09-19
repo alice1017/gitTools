@@ -12,11 +12,11 @@ from util.git     import *
 from util.color   import *
 from util.objects import Todo
 
-from subprocess import Popen, PIPE
-from StringIO   import StringIO
-from datetime   import datetime
-from sys        import exit        as kill
-from gettext    import gettext     as _
+from subprocess   import Popen, PIPE
+from StringIO     import StringIO
+from datetime     import datetime
+from sys          import exit        as kill
+from gettext      import gettext     as _
 
 parser = argparse.ArgumentParser(description="You can manage to \
                         What you want to do on your git repository.")
