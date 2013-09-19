@@ -73,16 +73,13 @@ class ArgumentNamespace(object):
             if key == "filter:content":
                 filter_name, filter_content = value.split(":")
                 self.__dict__["filter-%s"%filter_name] = filter_content
-                #setattr(self, "filter-%s"%filter_name, filter_content)
 
             elif key == "element:order":
                 sorter_name, sort_order = value.split(":")
                 self.__dict__["sortby-%s"%sorter_name] = sort_order
-                #setattr(self, "sortby-%s"%sorter_name, sort_order)
 
             else:
                 self.__dict__[key] = value
-                #setattr(self, key, value)
 
 
     def __repr__(self):
