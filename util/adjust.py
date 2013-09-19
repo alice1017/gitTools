@@ -106,11 +106,11 @@ def output_todolist(todo_container, sortby=None, nocolor=False):
 
     header = "Date"  .ljust(21)+ \
              "Author".ljust(author_length+2)+ \
-             "Stat"  .ljust(8)+ \
+             "Stat"  .ljust(6)+ \
              "#"     .ljust(index_length)+ \
              "Content"
-    title = "%(created_at)s  %(author)s  %(status)s  " \
-                                  " %(index)s%(content)s"
+    title = "%(created_at)s  %(author)s  %(status)s" \
+                                  "%(index)s%(content)s"
 
     print header
     print "-"*core.terminal_width()
