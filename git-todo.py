@@ -69,7 +69,7 @@ def printout_file():
     fp = open("TODO","w")
     sys.stdout = fp
 
-    adjust.output_todolist(todo_container, sortby="status-open")
+    adjust.output_todolist(todo_container, sortby="status-open", nocolor=True)
     fp.close()
     sys.stdout = sys.__stdout__
     
