@@ -84,6 +84,7 @@ help_formatter = (lambda prog:
                     )
                  )
 
+# Parser Define
 parser = argparse.ArgumentParser(
         prog=__prog__,
         formatter_class=help_formatter,
@@ -93,14 +94,17 @@ parser.add_argument(
         action="version",
         version="%s - %s" % (__prog__,__version__))
 
+# Subparser Define
 subparsers = parser.add_subparsers(
         title="git todo commands",
         dest="commands")
 
+# subcommand : init
 cmd_init = subparsers.add_parser(
         "init", 
         help=_("Program prepare for maneging your todo."))
 
+# subcommand : add
 cmd_add = subparsers.add_parser(
         "add",
         help=_("You can add new task. \
@@ -112,6 +116,7 @@ cmd_add.add_argument(
                 long string what contains spaces, please put \
                 double-quotation(\") to left and right side of long string."))
 
+# Subcommand : ls
 cmd_ls = subparsers.add_parser(
         "ls",
         help=_("You can show all todo with any filter."))
@@ -132,6 +137,7 @@ cmd_ls.add_argument(
                 the sorter element name and sort order by colon. \
                 (ex. date:ascending, index:Descending, etc.)"))
 
+# Subcommand : close
 cmd_close = subparsers.add_parser(
         "close",
         help=_("You can close a task.\
@@ -146,6 +152,7 @@ cmd_close.add_argument(
         type=int,
         help=_("The task index. this is INT type only."))
 
+# Subcommand : reopen
 cmd_reopen = subparsers.add_parser(
         "reopen",
         help=_("If you want to open a task again when you close a task by \
@@ -160,6 +167,7 @@ cmd_reopen.add_argument(
         type=int,
         help=_("The task index. this is INT type only."))
 
+# Subcomand : print
 cmd_print = subparsers.add_parser(
         "print",
         help=_("This program create the TODO file to write \
