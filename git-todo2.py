@@ -137,6 +137,26 @@ cmd_ls.add_argument(
                 the sorter element name and sort order by colon. \
                 (ex. date:ascending, index:Descending, etc.)"))
 
+# Subcommand : branch
+cmd_branch = subparsers.add_parser(
+        "branch",
+        help=_("This option create branch to implement contents of a task, and \
+                checkout it branch using argument. Please write the task index \
+                to argument.You can set branch name using argument. \
+                But when you don't want to set branch name, \
+                the branch name become 'Todo#(todo-index)_implement'. "))
+cmd_branch.add_argument(
+        "index",
+        action="store",
+        type=int,
+        help=_("The task index. this is INT type only."))
+cmd_branch.add_argument(
+        "-n", "--name",
+        action="store",
+        dest="branch-name",
+        help=_("The branch name string. \
+                You can use this option if you want to set branch name."))
+
 # Subcommand : close
 cmd_close = subparsers.add_parser(
         "close",
