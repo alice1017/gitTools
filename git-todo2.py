@@ -27,7 +27,7 @@ class OriginalHelpFormatter(argparse.HelpFormatter):
     def _format_action(self, action):
         # determine the required width and the entry label
         help_position = min(self._action_max_length + 2,
-                            self._max_help_position)
+                self._max_help_position)
         help_width = self._width - help_position
         action_width = help_position - self._current_indent - 2
         action_header = self._format_action_invocation(action)
@@ -76,13 +76,13 @@ class OriginalHelpFormatter(argparse.HelpFormatter):
         return self._join_parts(parts)
 
 help_formatter = (lambda prog: 
-                    OriginalHelpFormatter(
-                        prog,
-                        indent_increment=4,
-                        max_help_position=27,
-                        width=int(core.terminal_width())
-                    )
-                 )
+        OriginalHelpFormatter(
+            prog,
+            indent_increment=4,
+            max_help_position=27,
+            width=int(core.terminal_width())
+            )
+        )
 
 # Parser Define
 parser = argparse.ArgumentParser(
@@ -171,7 +171,7 @@ cmd_reopen.add_argument(
 cmd_print = subparsers.add_parser(
         "print",
         help=_("This program create the TODO file to write \
-                                        only OPEN status tasks."))
+                only OPEN status tasks."))
 
 
 
@@ -183,16 +183,16 @@ class ArgumentNamespace(object):
             if key.find(":") != -1 and value.find(":") == -1:
                 parser.error(_("'%s' does not follow the foramt." % value))
 
-            if key == "filter:content":
-                filter_name, filter_content = value.split(":")
-                self.__dict__["filter-%s"%filter_name] = filter_content
+        if key == "filter:content":
+            filter_name, filter_content = value.split(":")
+            self.__dict__["filter-%s"%filter_name] = filter_content
 
-            elif key == "element:order":
-                sorter_name, sort_order = value.split(":")
-                self.__dict__["sortby-%s"%sorter_name] = sort_order
+        elif key == "element:order":
+            sorter_name, sort_order = value.split(":")
+            self.__dict__["sortby-%s"%sorter_name] = sort_order
 
-            else:
-                self.__dict__[key] = value
+        else:
+            self.__dict__[key] = value
 
 
     def __repr__(self):
