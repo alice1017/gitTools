@@ -109,7 +109,7 @@ def output_todolist(todo_container, sortby=None, nocolor=False):
              "Stat"  .ljust(6)+ \
              "#"     .ljust(index_length)+ \
              "Content"
-    title = "%(created_at)s  %(author)s  %(status)s" \
+    title = "%(created_at)s  %(author)s  %(status)s " \
                                   "%(index)s%(content)s"
 
     print header
