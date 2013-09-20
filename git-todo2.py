@@ -119,7 +119,16 @@ cmd_add.add_argument(
 # Subcommand : ls
 cmd_ls = subparsers.add_parser(
         "ls",
-        help=_("You can show all todo with any filter."))
+        help=_("You can show tasks with any filter. \
+                If you all this option without any filter, \
+                this option show only OPEN status tasks. \
+                And If you want to show all tasks, \
+                Please use --all option."))
+cmd_ls.add_argument(
+        "--all",
+        action="store_true",
+        dest="show-all",
+        help=_("If you want to show all tsaks, Please use this option"))
 cmd_ls.add_argument(
         "--filter",
         action="store",
@@ -127,7 +136,9 @@ cmd_ls.add_argument(
         help=_("This is todo filter.\
                 You can make the filter by string concatenate \
                 the filter name and filter contents by colon. \
-                (ex. date:2012/12/31, status:open, etc.)"))
+                (ex. date:2012/12/31, status:open, etc.) \
+                These are filter names what you use : \
+                *date"))
 cmd_ls.add_argument(
         "--sortby",
         action="store",
