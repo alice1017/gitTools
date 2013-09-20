@@ -74,6 +74,11 @@ cmd_close.add_argument(
         type=int,
         help=_("The task index. this is INT type only."))
 
+cmd_print = subparsers.add_parser(
+        "print",
+        help=_("This program create the TODO file to write \
+                                        only OPEN status tasks."))
+
 
 
 class ArgumentNamespace(object):
