@@ -18,6 +18,11 @@ from datetime     import datetime
 from sys          import exit        as kill
 from gettext      import gettext     as _
 
+__prog__    = "git-todo"
+__version__ = "0.2.0b"
+__author__  = "Alice1017 <takemehighermore@gmail.com>"
+
+
 class OriginalHelpFormatter(argparse.HelpFormatter):
     def _format_action(self, action):
         # determine the required width and the entry label
@@ -80,9 +85,13 @@ help_formatter = (lambda prog:
                  )
 
 parser = argparse.ArgumentParser(
-        prog="git todo",
+        prog=__prog__,
         formatter_class=help_formatter,
         description="You can manage to What you want to do on your git repository.")
+parser.add_argument(
+        "-v", "--version",
+        action="version",
+        version="%s - %s" % (__prog__,__version__))
 
 subparsers = parser.add_subparsers(
         title="git todo commands",
