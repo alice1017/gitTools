@@ -225,6 +225,10 @@ class ArgumentNamespace(object):
             else:
                 self.__dict__[key] = value
 
+        else:
+
+            self.__dict__[key] = value
+
 
     def __repr__(self):
         return "ArgumentNamespace(%s)" % ", ".join([k+"='%s'"%v for k,v in vars(self).iteritems()])
