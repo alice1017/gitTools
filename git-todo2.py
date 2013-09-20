@@ -74,6 +74,20 @@ cmd_close.add_argument(
         type=int,
         help=_("The task index. this is INT type only."))
 
+cmd_reopen = subparsers.add_parser(
+        "reopen",
+        help=_("If you want to open a task again when you close a task by \
+                mistake, You can use this option. \
+                This option change task status to OPEN, and this option \
+                don't change commit hash when a task opened. And, \
+                This option delete git tag that put when you closed a task. \
+                Please write the task index to argument."))
+cmd_reopen.add_argument(
+        "index",
+        action="store",
+        type=int,
+        help=_("The task index. this is INT type only."))
+
 cmd_print = subparsers.add_parser(
         "print",
         help=_("This program create the TODO file to write \
