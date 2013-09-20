@@ -203,16 +203,16 @@ class ArgumentNamespace(object):
             if key.find(":") != -1 and value.find(":") == -1:
                 parser.error(_("'%s' does not follow the foramt." % value))
 
-        if key == "filter:content":
-            filter_name, filter_content = value.split(":")
-            self.__dict__["filter-%s"%filter_name] = filter_content
+            if key == "filter:content":
+                filter_name, filter_content = value.split(":")
+                self.__dict__["filter-%s"%filter_name] = filter_content
 
-        elif key == "element:order":
-            sorter_name, sort_order = value.split(":")
-            self.__dict__["sortby-%s"%sorter_name] = sort_order
+            elif key == "element:order":
+                sorter_name, sort_order = value.split(":")
+                self.__dict__["sortby-%s"%sorter_name] = sort_order
 
-        else:
-            self.__dict__[key] = value
+            else:
+                self.__dict__[key] = value
 
 
     def __repr__(self):
