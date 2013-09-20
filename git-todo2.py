@@ -141,7 +141,7 @@ cmd_ls.add_argument(
 cmd_branch = subparsers.add_parser(
         "branch",
         help=_("This option create branch to implement contents of a task, and \
-                checkout it branch using argument. Please write the task index \
+                checkout it branch. Please write the task index \
                 to argument.You can set branch name using argument. \
                 But when you don't want to set branch name, \
                 the branch name become 'Todo#(todo-index)_implement'. "))
