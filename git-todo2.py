@@ -125,7 +125,7 @@ cmd_ls = subparsers.add_parser(
                 And If you want to show all tasks, \
                 Please use --all option."))
 cmd_ls.add_argument(
-        "--all",
+        "-a", "--all",
         action="store_true",
         dest="show-all",
         help=_("If you want to show all tsaks, Please use this option"))
