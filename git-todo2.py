@@ -212,7 +212,7 @@ class ArgumentNamespace(object):
         if value != None:
 
             if key.find(":") != -1 and value.find(":") == -1:
-                parser.error(_("'%s' does not follow the foramt." % value))
+                parser.error(_("'%s' does not follow the format." % value))
 
             if key == "filter:content":
                 filter_name, filter_content = value.split(":")
