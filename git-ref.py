@@ -49,7 +49,7 @@ class ArgumentNamespace:
     def is_only_ref(self):
         """Return True if there is only reference argument"""
 
-        if args.file == None and args.type == False and args.ls == False:
+        if args.file == None and args.type == False and args.ls == False and args.pretty_print == None:
             return True
 
     def is_only_ls(self):
@@ -64,7 +64,7 @@ class ArgumentNamespace:
                 return True
 
             else:
-                parser.error("this option can't use concomitantly.1")
+                parser.error("this option can't use concomitantly.")
 
     def is_only_type(self):
         """Return True if there is only --type option"""
@@ -78,7 +78,7 @@ class ArgumentNamespace:
                 return True
 
             else:
-                parser.error("this option can't use concomitantly.2")
+                parser.error("this option can't use concomitantly.")
 
     def is_only_file(self):
         """Return True is there is only --file option"""
@@ -92,7 +92,7 @@ class ArgumentNamespace:
                 return True
 
             else:
-                parser.error("this option can't use concomitantly.3")
+                parser.error("this option can't use concomitantly.")
 
     def is_only_pretty_print(self):
         """Return True is there is only --pretty-print option"""
@@ -106,7 +106,7 @@ class ArgumentNamespace:
                 return True
 
             else:
-                parser.error("this option can't use concomitantly.3")
+                parser.error("this option can't use concomitantly.")
 
 def check_ref(reference):
     """This function check reference whether it's valid ref, Return True"""
@@ -146,13 +146,26 @@ def main(args):
 
     # User set --file
     elif args.is_only_file():
-        
+
         body = git("ls-tree", ref, args.file)
 
         if len(body) == 0:
             parser.error("%s file does not found." % args.file)
 
         print body.split(" ")[-1].split("\t")[0]
+        return 0
+
+    # User set --pretty-print
+    elif args.is_only_pretty_print():
+
+        body = git("ls-tree", ref, args.pretty_print)
+
+        if len(body) == 0:
+            parser.error("%s file does not found." % args.file)
+
+        hash_var = body.split(" ")[-1].split("\t")[0]
+
+        print git("cat-file", "-p", hash_var)
         return 0
 
 
