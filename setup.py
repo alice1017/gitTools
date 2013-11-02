@@ -6,7 +6,7 @@ from distutils.core import setup
 
 
 class Information(object):
-    version = "1.0.2.1"
+    version = "1.0.3.0b"
     author = "alice1017"
     author_github = "http://github.com/alice1017"
     author_twitter = "http://twitter.com/alice1017"
@@ -22,7 +22,8 @@ info  =  Information()
 if os.path.isdir("bin") == False:
     os.system("mkdir bin/")
 
-os.system("cp ./commithash.py bin/commithash;chmod +x ./bin/commithash")
+os.system("cp ./commithash.py bin/commithash; chmod +x ./bin/commithash")
+os.system("cp ./git-ref.py bin/git-ref; chmod +x ./bin/git-ref")
 
 setup(
     name = "gitTools",
@@ -35,6 +36,6 @@ setup(
     description = info.description,
     long_description = info.long_description,
     py_modules = ['commithash', 'util.core', 'util.color', 'util.objects', 'util.git', 'util.adjust'],
-    scripts = ['bin/commithash'],
+    scripts = ['bin/commithash', 'bin/git-ref'],
     requires = ['dateutil', 'termcolor', 'miniparser'],
 )

@@ -47,6 +47,40 @@ commithashの便利な使い方
 
 　このgitToolsはこれからもっと増えていく予定です。
 
+git-ref
+^^^^^^^^^^^
+
+　これはgitのreferenceにおけるハッシュ操作を便利にするスクリプトです。
+
+.. sourcecode:: shell 
+
+    usage: git ref [-h] [-l] [-t] [-f FILE] [-p FILE] reference
+
+    This script can show reference hash or files easyly.
+
+    positional arguments:
+      reference             Please set hash of reference. If you not set other
+                            options, script show full hash value.
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -l, --ls              Show all files with hash in commit.
+      -t, --type            Show type of hash.
+      -f FILE, --file FILE  Show file object hash in commit.
+      -p FILE, --pretty-print FILE
+                            Show file contents.
+
+*reference* を引数に取ります。 `reference` はハッシュ値でも、タグ名でも、gitで使えるリファレンスならなんでも可能です。
+
+*--ls* オプションを `reference` につけると、リファレンスのタイプが *tree* であった場合、 `git ls-tree` を実行します。
+
+*--type* オプションをつけると、リファレンスのタイプを出力します。
+
+*--file* オプションをつけてファイル名をセットすると、 *リファレンスにおけるファイルのハッシュ値* を出力します。
+
+*--pretty-print* オプションをつけてフィアル名をセットすると、 *リファレンスにおけるファイルの中身* を出力します。
+
+
 
 Copyright and License
 #######################
