@@ -11,8 +11,8 @@ from argparse import ArgumentParser, SUPPRESS
 #  git ref -t b81fe395c0bf28c4be8                      -> ハッシュ[b81fe395c0bf28c4be8]の[type値]を出力
 #  git ref b81fe395c0bf28c4be8 --file git-todo.py      -> ハッシュ[b81fe395c0bf28c4be8]の[git-todo.py]の[hash値]を出力
 #  git ref b81fe395c0bf28c4be8 --cat-file git-todo.py  -> ハッシュ[b81fe395c0bf28c4be8]の[git-todo.py]の[中身]を出力
-#  git ref --ls HEAD                                   -> ハッシュ[HEAD]の[ls-tree -r]を表示
-#  git ref 
+#  git ref --ls HEAD                                   -> コミット[HEAD]の[ls-tree -r]を表示
+#  git ref --detail HEAD                               -> コミット[HEAD]の[git show]を表示
 
 parser = ArgumentParser(prog="git ref",
             description="This script can show refs hash or files easyly.")
@@ -34,6 +34,9 @@ parser.add_argument("-f", "--file", action="store", default=SUPPRESS,
 parser.add_argument("-c", "--cat-file", action="store",
             dest="file", default=SUPPRESS,
             help="Show file contents if you set.")
+
+parser.add_argument("-d", "--detail", action="store_true", default=SUPPRESS,
+            help="Show reference's detail.")
             
 
 if __name__ == "__main__":
