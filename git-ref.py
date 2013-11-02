@@ -6,7 +6,7 @@ import sys
 from util         import core
 from util         import adjust
 from util.git     import *
-from argparse     import ArgumentParser, SUPPRESS, FileType
+from argparse     import ArgumentParser, SUPPRESS
 
 # usage
 #  git ref b81fe395c0bf28c4be8                         -> ハッシュ[b81fe395c0bf28c4be8]の[hash値]を出力
@@ -31,11 +31,11 @@ parser.add_argument("-l", "--ls", action="store_true",
 parser.add_argument("-t", "--type", action="store_true",
             help="Show type of hash.")
 
-parser.add_argument("-f", "--file", action="store", type=FileType('r'),
+parser.add_argument("-f", "--file", action="store",
             help="Show file object hash in commit.")
 
-parser.add_argument("-p", "--pretty-print", action="store", dest="print",
-            metavar="FILE", type=FileType('r'), help="Show file contents.")
+parser.add_argument("-p", "--pretty-print", action="store", dest="pretty_print",
+            metavar="FILE", help="Show file contents.")
 
 class ArgumentNamespace:
 
@@ -60,7 +60,7 @@ class ArgumentNamespace:
 
         if args.ls == True:
 
-            if args.file == None and args.type == False:
+            if args.file == None and args.type == False and args.pretty_print == None:
                 return True
 
             else:
@@ -74,7 +74,7 @@ class ArgumentNamespace:
 
         if args.type == True:
 
-            if args.file == None and args.ls == False:
+            if args.file == None and args.ls == False and args.pretty_print == None:
                 return True
 
             else:
@@ -88,7 +88,21 @@ class ArgumentNamespace:
 
         if args.file:
 
-            if args.type == False and args.ls == False:
+            if args.type == False and args.ls == False and args.pretty_print == None:
+                return True
+
+            else:
+                parser.error("this option can't use concomitantly.3")
+
+    def is_only_pretty_print(self):
+        """Return True is there is only --pretty-print option"""
+
+        if args.pretty_print == None:
+            return False
+
+        if args.pretty_print:
+
+            if args.type == False and args.ls == False and args.file == None:
                 return True
 
             else:
@@ -130,7 +144,16 @@ def main(args):
         print git("cat-file", "-t", ref)
         return 0
 
-    # User set --file or --cat-file
+    # User set --file
+    elif args.is_only_file():
+        
+        body = git("ls-tree", ref, args.file)
+
+        if len(body) == 0:
+            parser.error("%s file does not found." % args.file)
+
+        print body.split(" ")[-1].split("\t")[0]
+        return 0
 
 
 if __name__ == "__main__":
@@ -140,7 +163,7 @@ if __name__ == "__main__":
 
     #args = parser.parse_args()
     args = parser.parse_args(namespace=ArgumentNamespace())
-    print args
+    #print args
 
     sys.exit(main(args))
 
