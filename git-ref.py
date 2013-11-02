@@ -25,9 +25,6 @@ parser.add_argument("refernce", action="store",
                   If you not set other options, \
                                     script show full hash value.")
 
-parser.add_argument("-d", "--detail", action="store_true", default=SUPPRESS,
-            help="Show reference's detail.")
-
 parser.add_argument("-l", "--ls", action="store_true", default=SUPPRESS,
             help="Show all files with hash in commit.")
 
