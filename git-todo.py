@@ -41,6 +41,41 @@ def default():
     adjust.output_todolist(todo_container, sortby="status-open")
 
 @parser.option(
+    "print",
+    description="this option makes TODO file, and write all tasks.")
+def printout_file():
+    if os.access(CACHE_FILE_PATH, os.F_OK) != True:
+        print "The repository does not todo initialized yet."
+        print "Please do 'git todo init'"
+        kill(1)
+
+    # get todo container
+    todo_container = core.load_state(open(CACHE_FILE_PATH,"r"))
+    if len(todo_container) == 0:
+        print "There is not ToDo."
+        kill(1)
+
+    if os.access("TODO",os.F_OK):
+        print "The TODO file is already created."
+        confirm = raw_input("Do you sure overwrite tasks? (y/n) >> ")
+        if confirm in ["n", "no"]:
+            print "Sure."
+            return
+        elif confirm in ["y", "yes"]:
+            pass
+        else:
+            print "I can't udnerstand."
+
+    fp = open("TODO","w")
+    sys.stdout = fp
+
+    adjust.output_todolist(todo_container, sortby="status-open", nocolor=True)
+    fp.close()
+    sys.stdout = sys.__stdout__
+    
+    print "Complete."
+
+@parser.option(
     "init",
     description="prepare for managing todo")
 def initialize():

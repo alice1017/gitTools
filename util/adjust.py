@@ -96,7 +96,7 @@ def parse_commit(commitstring):
             "comment"   : comment}
         
 
-def output_todolist(todo_container, sortby=None):
+def output_todolist(todo_container, sortby=None, nocolor=False):
     """ToDoが入っているcontainerを指定してToDoをリスト表示する。"""
     """第二引数にsortするattributeを指定すればsortedの状態で表示される。"""
 
@@ -106,12 +106,11 @@ def output_todolist(todo_container, sortby=None):
 
     header = "Date"  .ljust(21)+ \
              "Author".ljust(author_length+2)+ \
-             "Stat"  .ljust(8)+ \
-             "Commit".ljust(12)+ \
+             "Stat"  .ljust(6)+ \
              "#"     .ljust(index_length)+ \
              "Content"
-    title = "%(created_at)s  %(author)s  %(status)s  " \
-                                  "%(commit)s  %(index)s%(content)s"
+    title = "%(created_at)s  %(author)s  %(status)s " \
+                                  "%(index)s%(content)s"
 
     print header
     print "-"*core.terminal_width()
@@ -137,16 +136,24 @@ def output_todolist(todo_container, sortby=None):
         todo_container = [(i,t) for i,t in todo_container if t.status == "OPEN"]
 
     for index, todo in todo_container:
-        print title % {
-              "index"      : yellow(str(index).ljust(index_length)),
-              "created_at" : todo.created_at.strftime(timeformat),
-              "author"     : todo.author.ljust(author_length),
-              "status"     : (blue(todo.status)+"  " if todo.status == "OPEN"
-                                                         else red(todo.status)),
-              "commit"     : (blue(todo.opened_commit[:10])
-                    if todo.status == "OPEN" else red(todo.closed_commit[:10])),
-              "content"    : (red(todo.content) if todo.status == "CLOSED"
-                                                             else todo.content),
-        }
+        if nocolor == True:
+            print title % {
+                  "index"      : str(index).ljust(index_length),
+                  "created_at" : todo.created_at.strftime(timeformat),
+                  "author"     : todo.author.ljust(author_length),
+                  "status"     : (todo.status+"  " if todo.status == "OPEN"
+                                                             else todo.status),
+                  "content"    : todo.content
+            }
+        else:
+            print title % {
+                  "index"      : yellow(str(index).ljust(index_length)),
+                  "created_at" : todo.created_at.strftime(timeformat),
+                  "author"     : todo.author.ljust(author_length),
+                  "status"     : (blue(todo.status)+"  " if todo.status == "OPEN"
+                                                             else red(todo.status)),
+                  "content"    : (red(todo.content) if todo.status == "CLOSED"
+                                                                 else todo.content),
+            }
 
 

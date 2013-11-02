@@ -47,12 +47,18 @@ commithashの便利な使い方
 
 　このgitToolsはこれからもっと増えていく予定です。
 
+
 Copyright and License
 #######################
 
 Copyright Alice1017 All rights reserved.
 
 License : MIT License
+
+TODO
+#########
+
+`こちらを参照 <https://github.com/alice1017/gitTools/blob/rewrite-parser/TODO>`_
 
 ChangeLog
 ##########
