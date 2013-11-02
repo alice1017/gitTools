@@ -18,10 +18,10 @@ from argparse     import ArgumentParser, SUPPRESS
 #  git ref --detail HEAD                               -> コミット[HEAD]の[git show]を表示
 
 parser = ArgumentParser(prog="git ref",
-            description="This script can show refernce hash or files easyly.")
+            description="This script can show reference hash or files easyly.")
 
-parser.add_argument("refernce", action="store",
-            help="Please set hash of refernce.\
+parser.add_argument("reference", action="store",
+            help="Please set hash of reference.\
                   If you not set other options, \
                                     script show full hash value.")
 
@@ -48,25 +48,40 @@ class ArgumentNamespace:
                                 [k+"='%s'"%v for k,v in vars(self).iteritems()])
 
     def is_only_ref(self):
-        """Return True  if there is only refernce argument"""
+        """Return True  if there is only reference argument"""
 
-        if len(vars(self).keys()) == 1 and self.refernce:
+        if len(vars(self).keys()) == 1 and self.reference:
             return True
+
+def check_ref(reference):
+    """This function check reference whether it's valid ref, \
+                              If it's valid ref, return reference"""
+
+    try:
+        # Run git rev-parse --verify [ref]
+        verified = git("rev-parse", "--verify", reference)
+
+    except:
+        # If it is invalid, Call error
+        parser.error("invalid reference.")
+
+    return reference
 
 def main(args):
 
     # User set reference only
     if args.is_only_ref():
 
-        try:
-            # Run git rev-parse --verify [ref]
-            verified = git("rev-parse", "--verify", args.refernce)
+        print git("rev-parse", check_ref(args.reference))
+        return 0
 
-        except:
-            # If it is invalid, Call error
-            parser.error("invalid reference.")
+    if args.ls:
 
-        print git("rev-parse", args.refernce)
+        print git("ls-tree", "-r", check_ref(args.reference))
+        return 0
+
+
+
             
 
 if __name__ == "__main__":
@@ -78,5 +93,5 @@ if __name__ == "__main__":
     args = parser.parse_args(namespace=ArgumentNamespace())
     print args
 
-    main(args)
+    sys.exit(main(args))
 
