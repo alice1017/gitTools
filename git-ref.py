@@ -18,7 +18,7 @@ parser = ArgumentParser(prog="git ref",
             description="This script can show refs hash or files easyly.")
 
 parser.add_argument("refarence", action="store",
-            help="Please set hash or refarence.\
+            help="Please set hash of refarence.\
                   If you not set other options, \
                                     script show full hash value.")
 
