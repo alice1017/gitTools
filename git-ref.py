@@ -26,17 +26,17 @@ parser.add_argument("-d", "--detail", action="store_true", default=SUPPRESS,
             help="Show reference's detail.")
 
 parser.add_argument("-l", "--ls", action="store_true", default=SUPPRESS,
-            help="Show all files with hash in commit if you set.")
+            help="Show all files with hash in commit.")
 
 parser.add_argument("-t", "--type", action="store_true", default=SUPPRESS,
             help="Show type of hash.")
 
 parser.add_argument("-f", "--file", action="store", default=SUPPRESS,
-            help="Show file object hash in commit if you set.")
+            help="Show file object hash in commit.")
 
 parser.add_argument("-c", "--cat-file", action="store",
             dest="file", default=SUPPRESS,
-            help="Show file contents if you set.")
+            help="Show file contents.")
 
 
             
