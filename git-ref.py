@@ -25,17 +25,16 @@ parser.add_argument("reference", action="store",
                   If you not set other options, \
                                     script show full hash value.")
 
-parser.add_argument("-l", "--ls", action="store_true", default=SUPPRESS,
+parser.add_argument("-l", "--ls", action="store_true",
             help="Show all files with hash in commit.")
 
-parser.add_argument("-t", "--type", action="store_true", default=SUPPRESS,
+parser.add_argument("-t", "--type", action="store_true",
             help="Show type of hash.")
 
-parser.add_argument("-f", "--file", action="store", default=SUPPRESS,
+parser.add_argument("-f", "--file", action="store",
             help="Show file object hash in commit.")
 
-parser.add_argument("-c", "--cat-file", action="store",
-            dest="file", default=SUPPRESS,
+parser.add_argument("-c", "--cat-file", action="store", dest="file",
             help="Show file contents.")
 
 class ArgumentNamespace:
@@ -54,9 +53,7 @@ class ArgumentNamespace:
             return True
 
 def check_ref(reference):
-    """This function check reference whether it's valid ref, \
-                              If it's valid ref, return reference"""
-
+    """This function check reference whether it's valid ref, Return True"""
     try:
         # Run git rev-parse --verify [ref]
         verified = git("rev-parse", "--verify", reference)
@@ -65,24 +62,31 @@ def check_ref(reference):
         # If it is invalid, Call error
         parser.error("invalid reference.")
 
-    return reference
+    return True
 
 def main(args):
+
+    ref = args.reference
+    check_ref(ref)
 
     # User set reference only
     if args.is_only_ref():
 
-        print git("rev-parse", check_ref(args.reference))
+        print git("rev-parse", ref)
         return 0
 
+    # User set --ls 
     if args.ls:
 
-        print git("ls-tree", "-r", check_ref(args.reference))
+        print git("ls-tree", "-r", ref)
         return 0
 
+    # User set --type
+    if args.type:
 
+        print git("cat-file", "-t", ref)
+        return 0
 
-            
 
 if __name__ == "__main__":
 
