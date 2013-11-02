@@ -22,6 +22,9 @@ parser.add_argument("refarence", action="store",
                   If you not set other options, \
                                     script show full hash value.")
 
+parser.add_argument("-d", "--detail", action="store_true", default=SUPPRESS,
+            help="Show reference's detail.")
+
 parser.add_argument("-l", "--ls", action="store_true", default=SUPPRESS,
             help="Show all files with hash in commit if you set.")
 
@@ -35,8 +38,7 @@ parser.add_argument("-c", "--cat-file", action="store",
             dest="file", default=SUPPRESS,
             help="Show file contents if you set.")
 
-parser.add_argument("-d", "--detail", action="store_true", default=SUPPRESS,
-            help="Show reference's detail.")
+
             
 
 if __name__ == "__main__":
