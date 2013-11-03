@@ -130,6 +130,15 @@ git-ref
     ----- (以下略) ----
                  
 
+INSTALL
+##########
+
+.. sourcecode:: shellscript
+
+    $ git clone https://github.com/alice1017/gitTools.git
+    $ cd gitTools
+    $ sudo python setup.py build install
+
 Copyright and License
 #######################
 
@@ -141,11 +150,6 @@ TODO
 #########
 
 `こちらを参照 <https://github.com/alice1017/gitTools/blob/rewrite-parser/TODO>`_
-
-ChangeLog
-##########
-
-:ver 1.0.1: *ls* オプションでの出力形式を変更。hash値の緑をなくし、hash値も10文字に制限して、シンプルにみやすさを追求しました。
 
 Author Info
 ############
