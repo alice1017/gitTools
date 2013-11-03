@@ -72,15 +72,57 @@ git-ref
 
 *reference* を引数に取ります。 `reference` はハッシュ値でも、タグ名でも、gitで使えるリファレンスならなんでも可能です。
 
+.. sourcecode:: shellscript
+
+    $ git ref 334a7dbbd5
+    334a7dbbd5e32f5216aed0686642bb0992dc1b13
+
 *--ls* オプションを `reference` につけると、リファレンスのタイプが *tree* であった場合、 `git ls-tree` を実行します。
+
+.. sourcecode:: shellscript
+
+    $ git ref --ls "HEAD^"
+    100644 blob 6eb1b3968e50be8911ab440d809dbcd5c0eb42f8    .gitignore
+    100644 blob 0be10ab5ed6ae100f249cddbaf6391f880d11cc7    LICENSE
+    100644 blob 1f4a0dda59c4cb2954b96ce3a31951d269bf657c    README.rst
+    100644 blob 375c486ceb657a1197806dee39f1583a497ac132    TODO
+    100644 blob 5d44657229010a20e3a7deddeea99360958e9b43    commithash.py
+    100644 blob 9cf656cb3b7b4d6ab76be914135e8fb6a397a7cf    git-todo2.py
+    ----- (以下略) ----
 
 *--type* オプションをつけると、リファレンスのタイプを出力します。
 
+.. sourcecode:: shellscript
+
+    $ git ref --type c2d6c39c3fb49563aac2b2013b56e41d70a8f509
+    tree
+
 *--file* オプションをつけてファイル名をセットすると、 *リファレンスにおけるファイルのハッシュ値* を出力します。
+
+.. sourcecode:: shellscript
+
+    $ git ref 334a7dbbd5 --file setup.py 
+    8e722b2d697b472390f2c5a40a2d8422281fe868
 
 *--pretty-print* オプションをつけてフィアル名をセットすると、 *リファレンスにおけるファイルの中身* を出力します。
 
+.. sourcecode:: shellscript
 
+    $ git ref 334a7dbbd5 --pretty-print setup.py 
+    #!/usr/bin/env python
+    #coding: utf-8
+
+    import os
+    from distutils.core import setup
+
+
+    class Information(object):
+        version = "1.0.2.1"
+        author = "alice1017"
+        author_github = "http://github.com/alice1017"
+    
+    ----- (以下略) ----
+                 
 
 Copyright and License
 #######################
