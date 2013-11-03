@@ -77,6 +77,12 @@ git-ref
     $ git ref 334a7dbbd5
     334a7dbbd5e32f5216aed0686642bb0992dc1b13
 
+    $ git ref 1.0.3b
+    dddcdb490a053897d3e193ddfe6b3c68ebaa3676
+
+    $ git ref git ref refs/remotes/github/rewrite-parser
+    6e79abd9c7a5ffd4876455aea0b751a8d457cb47
+
 *--ls* オプションを `reference` につけると、リファレンスのタイプが *tree* であった場合、 `git ls-tree` を実行します。
 
 .. sourcecode:: shellscript
